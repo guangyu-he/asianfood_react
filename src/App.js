@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component, Fragment } from "react";
+import { BrowserRouter as Router, Routes } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Searchbar from "./Searchbar";
+import Sidebar from "./Sidebar";
+import Listview from "./Listview";
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sidebar_state: false,
+      listmenu_state: false,
+    };
+
+    this.change_sidebar_state = this.change_sidebar_state.bind(this);
+    this.change_listview_state = this.change_listview_state.bind(this);
+  }
+
+  render() {
+    console.log(this.state.sidebar_state);
+    return (
+      <Router>
+        <Fragment>
+          <Searchbar change_sidebar_state={this.change_sidebar_state} change_listview_state={this.change_listview_state}/>
+          <Sidebar content={this.state.sidebar_state} />
+          <Listview />
+          <Routes path="./" component={<App />} />
+        </Fragment>
+      </Router>
+    );
+  }
+
+  change_sidebar_state() {
+    this.setState(
+      {
+        sidebar_state: !this.state.sidebar_state,
+      },
+      () => {}
+    );
+  }
+  change_listview_state() {
+    this.setState(
+      {
+        listmenu_state: !this.listmenu_state,
+      },
+      () => {}
+    );
+  }
 }
-
 export default App;
