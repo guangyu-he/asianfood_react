@@ -23,20 +23,15 @@ const onLoad = (marker) => {
   console.log("marker: ", marker);
 };
 
-class Home extends Component {
-  render() {
-    return (
-      <LoadScript googleMapsApiKey="">
-        <GoogleMap
-          mapContainerClassName="w-screen h-screen"
-          options={mapOptions}
-        >
-          {/* Child components, such as markers, info windows, etc. */}
-          <Marker onLoad={onLoad} position={mapOptions.center} />
-        </GoogleMap>
-      </LoadScript>
-    );
-  }
-}
+const Home = () => {
+  return (
+    <LoadScript googleMapsApiKey="AIzaSyD7eBZcwtUqmgeuYkWPjDK8d0uvU3Q1WrE">
+      <GoogleMap mapContainerClassName="w-screen h-screen" options={mapOptions}>
+        {/* Child components, such as markers, info windows, etc. */}
+        <Marker onLoad={onLoad} position={mapOptions.center} />
+      </GoogleMap>
+    </LoadScript>
+  );
+};
 
 export default Home;

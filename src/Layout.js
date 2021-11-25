@@ -1,76 +1,160 @@
-import Searchbar from "./components/Searchbar";
-import Sidebar from "./components/Sidebar";
+import React, { useState, Fragment } from "react";
+import { Link, Outlet } from "react-router-dom";
+import axios from "axios";
 
-import React, { Component, Fragment } from "react";
-import { Outlet } from "react-router-dom";
+let results = [];
+let query = "";
 
-class Layout extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sidebar_state: false,
-      searchbar_input: true,
-      names: "",
-    };
+const API_URL =
+  "https://asianfood.heguangyu.net/return_location_name_react.php";
 
-    this.change_sidebar_state = this.change_sidebar_state.bind(this);
-    this.change_sidebar_by_input = this.change_sidebar_by_input.bind(this);
-    this.change_searchbar_input_true =
-      this.change_searchbar_input_true.bind(this);
-    this.change_searchbar_input_false =
-      this.change_searchbar_input_false.bind(this);
-  }
-  render() {
-    return (
-      <Fragment>
-        <Searchbar
-          change_sidebar_state={this.change_sidebar_state}
-          change_sidebar_by_input={this.change_sidebar_by_input}
-          display_input={this.state.searchbar_input}
-        />
-        <Sidebar
-          display={this.state.sidebar_state}
-          change_searchbar_input_false={this.change_searchbar_input_false}
-          change_searchbar_input_true={this.change_searchbar_input_true}
-        />
+const Layout = () => {
+  let [sidebar_state, set_sidebar_state] = useState(false);
+  let [searchbar_state, set_searchbar_state] = useState(true);
+  let [listview_state, set_listview_state] = useState(false);
 
-        <Outlet />
-      </Fragment>
-    );
-  }
-  change_sidebar_state() {
-    this.setState(
-      {
-        sidebar_state: !this.state.sidebar_state,
-      },
-      () => {}
-    );
-  }
-  change_sidebar_by_input() {
-    if (this.state.sidebar_state) {
-      this.setState({
-        sidebar_state: false,
+  let [listitem, set_listitem] = useState([]);
+
+  const handleInputChange = async (event) => {
+    query = event.target.value;
+    if (query && query.length > 0) {
+      await axios.get(`${API_URL}?n=${query}`).then(({ data }) => {
+        results = data.split(",");
       });
-    } else {
+      console.log(results);
+      let names = [];
+      for (let i = 0; i < results.length - 1; i++) {
+        if (results[i] === undefined) {
+        } else {
+          names = [...names, results[i]];
+        }
+      }
+      set_listitem(names);
+    } else if (!query) {
     }
-  }
+  };
 
-  change_searchbar_input_false() {
-    this.setState(
-      {
-        searchbar_input: false,
-      },
-      () => {}
-    );
-  }
-  change_searchbar_input_true() {
-    this.setState(
-      {
-        searchbar_input: true,
-      },
-      () => {}
-    );
-  }
-}
+  const handelClick_button = (event) => {
+    set_sidebar_state(!sidebar_state);
+  };
 
+  const handelClick_input = (event) => {
+    set_listview_state(!listview_state);
+  };
+
+  return (
+    <Fragment>
+      <div className="fixed z-10 flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
+        <button
+          onClick={handelClick_button}
+          className="left-0 absolute inline-flex p-3 rounded text-white ml-auto text-gray-700 outline-none"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+        <input
+          className={`${
+            searchbar_state ? "" : "hidden"
+          } left-12 absolute peer h-full w-full outline-none text-sm text-gray-700 pr-2`}
+          type="text"
+          id="search"
+          placeholder="Search something.."
+          onClick={handelClick_input}
+          onChange={handleInputChange}
+        />
+        <div className="right-0 absolute grid place-items-center h-full w-12 text-gray-300">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+        </div>
+      </div>
+
+      <div
+        className={`${
+          listview_state ? "" : "hidden"
+        } container min-w-full z-10 top-14 absolute`}
+      >
+        <div className="flex justify-center">
+          <div className="bg-white shadow-xl rounded-lg w-1/2">
+            <ul className="divide-y divide-gray-300">
+              {listitem.map((item, index) => {
+                return (
+                  <li
+                    className="p-4 hover:bg-gray-50 cursor-pointer"
+                    key={item + index}
+                  >
+                    {item}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className={`${
+          sidebar_state ? "" : "hidden"
+        } absolute z-20 top-12 w-64 h-screen bg-white`}
+      >
+        <li className="inline-flex items-center p-2 mr-4 text-gray-700">
+          <Link to="/" className="text-xl font-bold uppercase tracking-wide">
+            Asian Food in Berlin
+          </Link>
+        </li>
+
+        <nav className="mt-10">
+          <Link
+            to="/"
+            className="flex items-center mt-5 py-2 px-8 bg-gray-200 text-gray-700 border-r-4 border-gray-700"
+            onClick={() => set_searchbar_state(true)}
+          >
+            <span className="mx-4 font-medium">Home</span>
+          </Link>
+
+          <Link
+            to="Dashboard"
+            className="flex items-center mt-5 py-2 px-8 bg-gray-200 text-gray-700 border-r-4 border-gray-700"
+            onClick={() => set_searchbar_state(true)}
+          >
+            <span className="mx-4 font-medium">Dashboard</span>
+          </Link>
+
+          <Link
+            to="About"
+            className="flex items-center mt-5 py-2 px-8 bg-gray-200 text-gray-700 border-r-4 border-gray-700"
+            onClick={() => set_searchbar_state(false)}
+          >
+            <span className="mx-4 font-medium">About</span>
+          </Link>
+        </nav>
+      </div>
+
+      <Outlet />
+    </Fragment>
+  );
+};
 export default Layout;
