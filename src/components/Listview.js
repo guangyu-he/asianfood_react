@@ -1,14 +1,40 @@
 import React, { Component } from "react";
 
+import axios from "axios";
+
+const API_URL = "https://asianfood.heguangyu.net/return_location_geo_react.php";
+
 class Listview extends Component {
   constructor(props) {
     super(props);
 
     this.handleClick_li = this.handleClick_li.bind(this);
+    this.getInfo = this.getInfo.bind(this);
+
+    this.state = {
+      lat: "",
+      lag: "",
+    };
   }
 
   handleClick_li(value) {
-    console.log(value);
+    this.getInfo(value);
+  }
+
+  getInfo(value) {
+    axios.get(`${API_URL}?n=${value}`).then(({ data }) => {
+      let lat = data.split(",")[0];
+      let lag = data.split(",")[1];
+      this.setState(
+        {
+          lat: lat,
+          lag: lag,
+        },
+        () => {
+          console.log(this.state);
+        }
+      );
+    });
   }
 
   render() {

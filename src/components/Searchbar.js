@@ -2,7 +2,8 @@ import React, { Component, Fragment } from "react";
 import Listview from "./Listview";
 import axios from "axios";
 
-const API_URL = "https://asianfood.heguangyu.net/return_location_react.php";
+const API_URL =
+  "https://asianfood.heguangyu.net/return_location_name_react.php";
 
 class Searchbar extends Component {
   constructor(props) {
@@ -23,16 +24,18 @@ class Searchbar extends Component {
 
   getInfo = () => {
     axios.get(`${API_URL}?n=${this.state.query}`).then(({ data }) => {
+      let results = data.split(",");
       this.setState({
-        results: data.split("<br>"),
+        results: results,
       });
     });
   };
 
   handleInputChange = () => {
+    let query = this.search.value;
     this.setState(
       {
-        query: this.search.value,
+        query: query,
       },
       () => {
         if (this.state.query && this.state.query.length >= 1) {
@@ -48,7 +51,7 @@ class Searchbar extends Component {
     for (let i = 0; i < this.state.results.length - 1; i++) {
       if (this.state.results[i] === undefined) {
       } else {
-        names = [...names, this.state.results[i].split(",")[0]];
+        names = [...names, this.state.results[i]];
       }
     }
     return (
@@ -108,15 +111,17 @@ class Searchbar extends Component {
 
   handleClick_button() {
     this.props.change_sidebar_state();
+    let display_list = false;
     this.setState({
-      display_list: false,
+      display_list: display_list,
     });
   }
 
   handleClick_input() {
     this.props.change_sidebar_by_input();
+    let display_list = !this.state.display_list;
     this.setState({
-      display_list: !this.state.display_list,
+      display_list: display_list,
     });
   }
 }
