@@ -1,4 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, Fragment} from "react";
+
+import Home from "../pages/Home"
 
 import axios from "axios";
 
@@ -13,7 +15,7 @@ class Listview extends Component {
 
     this.state = {
       lat: "",
-      lag: "",
+      lng: "",
     };
   }
 
@@ -24,11 +26,11 @@ class Listview extends Component {
   getInfo(value) {
     axios.get(`${API_URL}?n=${value}`).then(({ data }) => {
       let lat = data.split(",")[0];
-      let lag = data.split(",")[1];
+      let lng = data.split(",")[1];
       this.setState(
         {
           lat: lat,
-          lag: lag,
+          lng: lng,
         },
         () => {
           console.log(this.state);
@@ -39,6 +41,7 @@ class Listview extends Component {
 
   render() {
     return (
+      <Fragment>
       <div
         className={`${
           this.props.display ? "" : "hidden"
@@ -62,6 +65,7 @@ class Listview extends Component {
           </div>
         </div>
       </div>
+      </Fragment>
     );
   }
 }
