@@ -1,10 +1,6 @@
-import React, { Component } from "react";
-import {
-  GoogleMap,
-  LoadScript,
-  useGoogleMap,
-  Marker,
-} from "@react-google-maps/api";
+import React from "react";
+import { useLocation } from "react-router-dom";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 const mapOptions = {
   zoom: 13,
@@ -19,16 +15,25 @@ const mapOptions = {
   mapId: "e04d39f76af137b0",
 };
 
-const onLoad = (marker) => {
-  console.log("marker: ", marker);
-};
+const onLoad = (marker) => {};
 
 const Home = () => {
+  const location = useLocation();
+  let marker_pos="";
+  if (location.state === null) {
+    marker_pos = mapOptions.center;
+  } else {
+    marker_pos = {
+      lat: parseFloat(location.state.lat),
+      lng: parseFloat(location.state.lng),
+    };
+  }
+
   return (
     <LoadScript googleMapsApiKey="AIzaSyD7eBZcwtUqmgeuYkWPjDK8d0uvU3Q1WrE">
       <GoogleMap mapContainerClassName="w-screen h-screen" options={mapOptions}>
         {/* Child components, such as markers, info windows, etc. */}
-        <Marker onLoad={onLoad} position={mapOptions.center} />
+        <Marker onLoad={onLoad} position={marker_pos} />
       </GoogleMap>
     </LoadScript>
   );
