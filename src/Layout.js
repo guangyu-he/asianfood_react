@@ -1,6 +1,5 @@
 import Searchbar from "./components/Searchbar";
 import Sidebar from "./components/Sidebar";
-import Listview from "./components/Listview";
 
 import React, { Component, Fragment } from "react";
 import { Outlet } from "react-router-dom";
@@ -10,12 +9,12 @@ class Layout extends Component {
     super(props);
     this.state = {
       sidebar_state: false,
-      listmenu_state: false,
       searchbar_input: true,
+      names: "",
     };
 
     this.change_sidebar_state = this.change_sidebar_state.bind(this);
-    this.change_listview_state = this.change_listview_state.bind(this);
+    this.change_sidebar_by_input = this.change_sidebar_by_input.bind(this);
     this.change_searchbar_input_true =
       this.change_searchbar_input_true.bind(this);
     this.change_searchbar_input_false =
@@ -26,7 +25,7 @@ class Layout extends Component {
       <Fragment>
         <Searchbar
           change_sidebar_state={this.change_sidebar_state}
-          change_listview_state={this.change_listview_state}
+          change_sidebar_by_input={this.change_sidebar_by_input}
           display_input={this.state.searchbar_input}
         />
         <Sidebar
@@ -34,7 +33,6 @@ class Layout extends Component {
           change_searchbar_input_false={this.change_searchbar_input_false}
           change_searchbar_input_true={this.change_searchbar_input_true}
         />
-        <Listview display={this.state.listmenu_state} />
 
         <Outlet />
       </Fragment>
@@ -44,19 +42,17 @@ class Layout extends Component {
     this.setState(
       {
         sidebar_state: !this.state.sidebar_state,
-        listmenu_state: false,
       },
       () => {}
     );
   }
-  change_listview_state() {
-    this.setState(
-      {
+  change_sidebar_by_input() {
+    if (this.state.sidebar_state) {
+      this.setState({
         sidebar_state: false,
-        listmenu_state: !this.state.listmenu_state,
-      },
-      () => {}
-    );
+      });
+    } else {
+    }
   }
 
   change_searchbar_input_false() {
