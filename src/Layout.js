@@ -250,6 +250,7 @@ const Layout = () => {
       let geo = {
         lat: "",
         lng: "",
+        geo_name: query,
       };
       geo.lat = names[0];
       geo.lng = names[1];
