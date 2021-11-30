@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect, useRef } from "react";
+import React, { useState, Fragment, useRef } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -14,13 +14,8 @@ const Layout = () => {
   let [sidebar_state, set_sidebar_state] = useState(false);
   let [searchbar_state, set_searchbar_state] = useState(true);
   let [listview_state, set_listview_state] = useState(false);
-  let [searchbar_button_state, set_searchbar_button_state] = useState(false);
-
-  let [inputvalue, set_inputvalue] = useState("Search something...");
 
   let [listitem, set_listitem] = useState([]);
-
-  let [geo_item, set_geo_item] = useState("");
 
   const handleInputChange = async (event) => {
     set_listview_state(true);
@@ -51,9 +46,10 @@ const Layout = () => {
     searchInput.current.value = "";
   };
 
+  const navigate = useNavigate();
+
   const handelClick_item = async (query) => {
     set_listview_state(false);
-    set_searchbar_button_state(true);
     let results = [];
     if (query && query.length > 0) {
       await axios.get(`${API_URL_GEO}?n=${query}`).then(({ data }) => {
@@ -72,21 +68,12 @@ const Layout = () => {
       };
       geo.lat = names[0];
       geo.lng = names[1];
-      set_geo_item(geo);
-      set_inputvalue(query);
+      navigate("/", { state: geo });
       searchInput.current.value = "";
     } else if (!query) {
     }
   };
 
-  const navigate = useNavigate();
-
-  const toHome = () => {
-    set_searchbar_button_state(false);
-    navigate("/", { state: geo_item });
-  };
-
-  useEffect(() => {}, [inputvalue]);
 
   return (
     <Fragment>
@@ -117,14 +104,11 @@ const Layout = () => {
           type="text"
           id="search"
           ref={searchInput}
-          placeholder={inputvalue}
+          placeholder={"Search something..."}
           onClick={handelClick_input}
           onChange={handleInputChange}
         />
-        <button
-          onClick={toHome}
-          className={`right-0 absolute grid place-items-center h-full w-12 ${searchbar_button_state ? "text-black bg-gray-300" : "text-gray-300"}`}
-        >
+        <button className="right-0 absolute grid place-items-center h-full w-12 text-gray-300">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
