@@ -11,20 +11,19 @@ $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
   echo "连接成功<br>"; */
 
 // 设置编码，防止中文乱码
-mysqli_query($conn, "set names utf8");
+mysqli_query($conn , "set names utf8");
 
 $name = $_GET['n'];
 
 $sql = "SELECT * FROM locations WHERE name='$name' ";
 
-mysqli_select_db($conn, $dbname);
-$retval = mysqli_query($conn, $sql);
+mysqli_select_db( $conn, $dbname );
+$retval = mysqli_query( $conn, $sql );
 
 if (mysqli_num_rows($retval) > 0) {
   // 输出数据
-  while ($row = mysqli_fetch_assoc($retval)) {
-    echo "" . $row["lat"] . ",";
-    echo "" . $row["lng"] . "";
+  while($row = mysqli_fetch_assoc($retval)) {
+      echo "" .$row["type"]. "";
   }
 } else {
 }
