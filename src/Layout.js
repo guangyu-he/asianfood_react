@@ -11,6 +11,9 @@ const API_URL_GEO =
 const API_URL_TYPE =
   "https://asianfood.heguangyu.net/return_location_type_react.php";
 
+const API_URL_REVIEW =
+  "https://asianfood.heguangyu.net/return_location_review_react.php";
+
 const Sidebar = (props) => {
   return (
     <div
@@ -236,9 +239,7 @@ const Layout = () => {
     //ANCHOR close list view
     change_listview_state(false);
 
-    let results = [];
-    let names = [];
-    let type = "";
+    let results = [], names = "", type = "", review = "";
 
     if (query && query.length > 0) {
       await axios.get(`${API_URL_GEO}?n=${query}`).then(({ data }) => {
@@ -253,12 +254,16 @@ const Layout = () => {
       await axios.get(`${API_URL_TYPE}?n=${query}`).then(({ data }) => {
         type = data;
       });
+      await axios.get(`${API_URL_REVIEW}?n=${query}`).then(({ data }) => {
+        review = data;
+      });
       //ANCHOR build a object accepted by Marker in Home.js
       let geo = {
         lat: names[0],
         lng: names[1],
         geo_name: query,
         type_name: type,
+        review_points: review,
       };
       //ANCHOR navigate to home.js with geo object
       navigate("/", { state: geo });
