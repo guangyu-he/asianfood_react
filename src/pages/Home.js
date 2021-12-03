@@ -7,6 +7,10 @@ import {
 } from "@react-google-maps/api";
 import { useLocation } from "react-router-dom";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar as faStar_solid } from "@fortawesome/free-solid-svg-icons";
+import { faStar as faStar_regular } from "@fortawesome/free-regular-svg-icons";
+
 const containerStyle = {
   width: "100%",
   height: "100vh",
@@ -54,8 +58,15 @@ function Home() {
   }
   const review_points_display = (props) => {
     var doms = [];
-    for (var i = 0; i < props; i++) {
-      doms.push(<p key={"star" + props + i}>star!</p>);
+    for (let i = 0; i < props; i++) {
+      doms.push(
+        <FontAwesomeIcon key={"faStar_solid" + i} icon={faStar_solid} />
+      );
+    }
+    for (let j = 0; j < 5 - props; j++) {
+      doms.push(
+        <FontAwesomeIcon key={"faStar_regular" + j} icon={faStar_regular} />
+      );
     }
     return doms;
   };
