@@ -35,6 +35,7 @@ function Home() {
   let info_state = false;
   let type = "";
   let review = 0;
+  let review_details = "";
 
   const location = useLocation();
   if (location.state === null) {
@@ -46,6 +47,7 @@ function Home() {
     info_state = false;
     type = "";
     review = 0;
+    review_details = "";
   } else {
     marker_pos = {
       lat: parseFloat(location.state.lat),
@@ -55,6 +57,7 @@ function Home() {
     info_state = true;
     type = location.state.type_name;
     review = parseInt(location.state.review_points);
+    review_details = location.state.review_text;
   }
   const review_points_display = (props) => {
     var doms = [];
@@ -134,6 +137,9 @@ function Home() {
           <div>
             <div className="inline-flex">{review_points_display(review)}</div>
           </div>
+          <div>
+            <div>{review_details}</div>
+            </div>
         </div>
         <div className="w-1/4 "></div>
       </div>
