@@ -282,7 +282,11 @@ const Layout = () => {
   //!SECTION
 
   //SECTION do when clicking searchbar input
-  const handelClick_input = (event) => {};
+  const handelClick_input = (event) => {
+    if (sidebar_state === true) {
+      change_sidebar_state();
+    }
+  };
   //!SECTION
 
   //SECTION add marker on Home.js when clicking items from list
@@ -399,6 +403,7 @@ const Layout = () => {
       <Searchbar
         handelClick_button={handelClick_button}
         searchbar_state={searchbar_state}
+        sidebar_state={sidebar_state}
         searchInput={searchInput}
         handleInputChange={handleInputChange}
         handelClick_input={handelClick_input}
