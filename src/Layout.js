@@ -14,6 +14,12 @@ const API_URL_TYPE =
 const API_URL_REVIEW =
   "https://asianfood.heguangyu.net/return_location_review_react.php";
 
+const API_URL_REVIEW_DETAILS =
+  "https://asianfood.heguangyu.net/return_location_review_details_react.php";
+
+const API_URL_NAME_OFTYPE =
+  "https://asianfood.heguangyu.net/return_location_name_oftype_react.php";
+
 const Sidebar = (props) => {
   return (
     <div
@@ -61,7 +67,7 @@ const Itemlist = (props) => {
     <div
       className={`${
         props.listview_state ? "" : "hidden"
-      } container min-w-full z-10 top-14 absolute`}
+      } container min-w-full z-50 top-14 absolute`}
     >
       <div className="flex justify-center">
         <div className="bg-white shadow-xl rounded-lg w-1/2">
@@ -211,6 +217,15 @@ const Layout = () => {
 
     //ANCHOR require data from php
     if (query && query.length > 0) {
+      if (query === "k" || query === "ko" || query === "kor") {
+        names = [...names, "Korean Restaurants..."];
+      } else if (query === "c" || query === "ch" || query === "chi") {
+        names = [...names, "Chinese Restaurants..."];
+      } else if (query === "j" || query === "ja" || query === "jap") {
+        names = [...names, "Japanese Restaurants..."];
+      } else if (query === "v" || query === "vi" || query === "vie") {
+        names = [...names, "Vietnamese Restaurants..."];
+      }
       await axios.get(`${API_URL_NAME}?n=${query}`).then(({ data }) => {
         results = data.split(",");
       });
@@ -247,7 +262,63 @@ const Layout = () => {
     let results = [],
       names = "",
       type = "",
-      review = "";
+      review = "",
+      review_details = "";
+
+    if (query === "Korean Restaurants...") {
+      await axios.get(`${API_URL_NAME_OFTYPE}?n=ko`).then(({ data }) => {
+        results = data.split(",");
+      });
+      for (let i = 0; i < results.length - 1; i++) {
+        if (results[i] === undefined) {
+        } else {
+          names = [...names, results[i]];
+        }
+      }
+      change_listview_state(true);
+      change_listitem(names);
+      return false;
+    } else if (query === "Chinese Restaurants...") {
+      await axios.get(`${API_URL_NAME_OFTYPE}?n=ch`).then(({ data }) => {
+        results = data.split(",");
+      });
+      for (let i = 0; i < results.length - 1; i++) {
+        if (results[i] === undefined) {
+        } else {
+          names = [...names, results[i]];
+        }
+      }
+      change_listview_state(true);
+      change_listitem(names);
+      return false;
+    } else if (query === "Japanese Restaurants...") {
+      await axios.get(`${API_URL_NAME_OFTYPE}?n=ja`).then(({ data }) => {
+        results = data.split(",");
+      });
+      for (let i = 0; i < results.length - 1; i++) {
+        if (results[i] === undefined) {
+        } else {
+          names = [...names, results[i]];
+        }
+      }
+      change_listview_state(true);
+      change_listitem(names);
+      return false;
+    } else if (query === "Vietnamese Restaurants...") {
+      await axios.get(`${API_URL_NAME_OFTYPE}?n=vi`).then(({ data }) => {
+        results = data.split(",");
+      });
+      for (let i = 0; i < results.length - 1; i++) {
+        if (results[i] === undefined) {
+        } else {
+          names = [...names, results[i]];
+        }
+      }
+      change_listview_state(true);
+      change_listitem(names);
+      return false;
+    } else {
+    }
 
     if (query && query.length > 0) {
       await axios.get(`${API_URL_GEO}?n=${query}`).then(({ data }) => {
@@ -265,6 +336,11 @@ const Layout = () => {
       await axios.get(`${API_URL_REVIEW}?n=${query}`).then(({ data }) => {
         review = data;
       });
+      await axios
+        .get(`${API_URL_REVIEW_DETAILS}?n=${query}`)
+        .then(({ data }) => {
+          review_details = data;
+        });
       //ANCHOR build a object accepted by Marker in Home.js
       let geo = {
         lat: names[0],
@@ -272,6 +348,7 @@ const Layout = () => {
         geo_name: query,
         type_name: type,
         review_points: review,
+        review_text: review_details,
       };
       //ANCHOR navigate to home.js with geo object
       navigate("/", { state: geo });
