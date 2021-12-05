@@ -36,24 +36,36 @@ const Sidebar = (props) => {
       <nav className="mt-10">
         <Link
           to="/"
-          className="flex items-center mt-5 py-2 px-8 bg-gray-200 text-gray-700 border-r-4 border-gray-700"
-          onClick={() => props.change_searchbar_state(true)}
+          className={`flex items-center mt-5 py-2 px-8 text-gray-700 border-r-4 ${
+            props.sidebar_item.home
+              ? "bg-gray-200 border-gray-700"
+              : "hover:bg-gray-200 hover:border-gray-700"
+          }`}
+          onClick={() => props.change_searchbar_state(true, "home")}
         >
           <span className="mx-4 font-medium">Home</span>
         </Link>
 
         <Link
           to="/Dashboard"
-          className="flex items-center mt-5 py-2 px-8 bg-gray-200 text-gray-700 border-r-4 border-gray-700"
-          onClick={() => props.change_searchbar_state(true)}
+          className={`flex items-center mt-5 py-2 px-8 text-gray-700 border-r-4 ${
+            props.sidebar_item.dashboard
+              ? "bg-gray-200 border-gray-700"
+              : "hover:bg-gray-200 hover:border-gray-700"
+          }`}
+          onClick={() => props.change_searchbar_state(true, "dashboard")}
         >
           <span className="mx-4 font-medium">Dashboard</span>
         </Link>
 
         <Link
           to="/About"
-          className="flex items-center mt-5 py-2 px-8 bg-gray-200 text-gray-700 border-r-4 border-gray-700"
-          onClick={() => props.change_searchbar_state(false)}
+          className={`flex items-center mt-5 py-2 px-8 text-gray-700 border-r-4 ${
+            props.sidebar_item.about
+              ? "bg-gray-200 border-gray-700"
+              : "hover:bg-gray-200 hover:border-gray-700"
+          }`}
+          onClick={() => props.change_searchbar_state(false, "about")}
         >
           <span className="mx-4 font-medium">About</span>
         </Link>
@@ -168,15 +180,37 @@ const Layout = () => {
 
   //SECTION control searchbar component state
   const [searchbar_state, set_searchbar_state] = useState(true);
+
+  let sidebar_item_ini = {
+    home: true,
+    dashboard: false,
+    about: false,
+  };
+  const [sidebar_item, set_sidebar_item] = useState(sidebar_item_ini);
+  const intervalRef_sidebar_item = useRef();
+
   const intervalRef_searchbar_state = useRef();
-  function change_searchbar_state(props) {
+  function change_searchbar_state(props, item) {
+    sidebar_item_ini.home = false;
+    sidebar_item_ini.dashboard = false;
+    sidebar_item_ini.about = false;
     setTimeout(() => {
       set_searchbar_state(props);
+
+      if (item === "home") {
+        sidebar_item_ini.home = true;
+      } else if (item === "dashboard") {
+        sidebar_item_ini.dashboard = true;
+      } else if (item === "about") {
+        sidebar_item_ini.about = true;
+      }
+      set_sidebar_item(sidebar_item_ini);
     }, 100);
   }
   useEffect(() => {
     intervalRef_searchbar_state.current = searchbar_state;
-  }, [searchbar_state]);
+    intervalRef_sidebar_item.current = sidebar_item;
+  }, [searchbar_state, sidebar_item]);
   //!SECTION
 
   //SECTION control listview component state
@@ -377,6 +411,7 @@ const Layout = () => {
       <Sidebar
         sidebar_state={sidebar_state}
         change_searchbar_state={change_searchbar_state}
+        sidebar_item={sidebar_item}
       />
       <Outlet />
     </Fragment>
