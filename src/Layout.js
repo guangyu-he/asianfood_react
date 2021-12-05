@@ -138,6 +138,11 @@ const Searchbar = (props) => {
 };
 
 const Layout = () => {
+  //ANCHOR change title of the page
+  useEffect(() => {
+    document.title = "Asian Food in Berlin";
+  }, []);
+
   //ANCHOR create ref for searchInput
   const searchInput = useRef();
 
@@ -239,7 +244,10 @@ const Layout = () => {
     //ANCHOR close list view
     change_listview_state(false);
 
-    let results = [], names = "", type = "", review = "";
+    let results = [],
+      names = "",
+      type = "",
+      review = "";
 
     if (query && query.length > 0) {
       await axios.get(`${API_URL_GEO}?n=${query}`).then(({ data }) => {
