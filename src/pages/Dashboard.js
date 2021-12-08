@@ -109,7 +109,7 @@ const Dashboard = () => {
   useEffect(() => {
     set_geo_name(location.state.geo_name);
   }, [location.state.geo_name]);
-  let gmap_link_name = "";
+  let gmap_link_name = geo_name;
   const handelChange_name_input = (event) => {
     gmap_link_name = event.target.value;
     console.log(gmap_link_name);
