@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, Fragment } from "react";
+import { useLocation } from "react-router-dom";
 
 const Dashboard = () => {
   const userInput = useRef();
@@ -33,41 +34,57 @@ const Dashboard = () => {
     }
   };
 
+  let geo_name = "";
+  const location = useLocation();
+  if (location.state === null) {
+  } else {
+    console.log(location.state);
+    geo_name = location.state.geo_name;
+  }
+
   return (
-    <div className="absolute inset-96">
-      <h2>Dashboard</h2>
-      <div>
+    <Fragment>
+      <div className="hidden absolute inset-96">
+        <h2>Dashboard</h2>
         <div>
-          <label className="sr-only">User Name</label>
-          <input
-            type="text"
-            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="User Name"
-            ref={userInput}
-          ></input>
+          <div>
+            <label className="sr-only">User Name</label>
+            <input
+              type="text"
+              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="User Name"
+              ref={userInput}
+            ></input>
+          </div>
+          <div>
+            <label className="sr-only">Password</label>
+            <input
+              type="password"
+              autoComplete="current-password"
+              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="Password"
+              ref={passInput}
+            ></input>
+          </div>
         </div>
         <div>
-          <label className="sr-only">Password</label>
-          <input
-            type="password"
-            autoComplete="current-password"
-            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Password"
-            ref={passInput}
-          ></input>
+          <button
+            type="submit"
+            onClick={handelClick_login}
+            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Sign in
+          </button>
         </div>
+        <p className={`${correct_display ? "" : "hidden"} text-red-600`}>
+          {" "}
+          {correct_text}{" "}
+        </p>
       </div>
-      <div>
-        <button
-          type="submit"
-          onClick={handelClick_login}
-          className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Sign in
-        </button>
+      <div className="absolute inset-96">
+        <p>Name:{geo_name}</p>
       </div>
-      <p className={`${correct_display ? "" : "hidden"} text-red-600`}> {correct_text} </p>
-    </div>
+    </Fragment>
   );
 };
 
