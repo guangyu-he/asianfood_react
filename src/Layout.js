@@ -389,7 +389,7 @@ const Layout = () => {
         review_text: review_details,
       };
       //ANCHOR navigate to home.js with geo object
-      console.log(window.location.pathname);
+      //console.log(window.location.pathname);
       navigate(window.location.pathname, { state: geo });
 
       //ANCHOR clean searchbar input

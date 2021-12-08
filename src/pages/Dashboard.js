@@ -45,6 +45,17 @@ const Dashboard = () => {
   };
 
   const location = useLocation();
+  if (location.state === null) {
+    location.state = {
+      type_name: "",
+      lat: "",
+      lng: "",
+      geo_name: "",
+      review_points: "",
+      review_text: "",
+    };
+  } else {
+  }
 
   const [type_name, set_type_name] = useState("");
   useEffect(() => {
