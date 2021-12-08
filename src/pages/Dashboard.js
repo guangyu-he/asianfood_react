@@ -1,5 +1,9 @@
 import React, { useRef, useEffect, useState, Fragment } from "react";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
+
+const API_URL_CREATE =
+  "https://asianfood.heguangyu.net/create_location_react.php";
 
 const Dashboard = () => {
   const userInput = useRef();
@@ -40,24 +44,127 @@ const Dashboard = () => {
     }
   };
 
-  let marker_pos = "";
-  let info_name = "";
-  let type = "";
-  let review = 0;
-  let review_details = "";
-
   const location = useLocation();
-  if (location.state === null) {
-  } else {
-    marker_pos = {
-      lat: parseFloat(location.state.lat),
-      lng: parseFloat(location.state.lng),
-    };
-    info_name = location.state.geo_name;
-    type = location.state.type_name;
-    review = parseInt(location.state.review_points);
-    review_details = location.state.review_text;
-  }
+
+  const [type_name, set_type_name] = useState("");
+  useEffect(() => {
+    set_type_name(location.state.type_name);
+  }, [location.state.type_name]);
+  const Type = React.memo((props) => {
+    //console.log(props.type_name);
+    return (
+      <div className="flow-root p-1">
+        <p>Type:</p>
+        <input
+          className={`${
+            props.alert_type_input ? "border-2 border-red-500" : ""
+          } w-80`}
+          defaultValue={props.type_name}
+          ref={type_input}
+        ></input>
+      </div>
+    );
+  });
+
+  const [lat, set_lat] = useState(0);
+  const [lng, set_lng] = useState(0);
+  useEffect(() => {
+    set_lat(location.state.lat);
+  }, [location.state.lat]);
+  useEffect(() => {
+    set_lng(location.state.lng);
+  }, [location.state.lng]);
+  const GeoInfo = React.memo((props) => {
+    let defaultValue = "";
+    if (props.lat === "") {
+    } else {
+      defaultValue = props.lat + "," + props.lng;
+    }
+    return (
+      <div className="flow-root p-1">
+        <p>Geo Info:</p>
+        <input
+          className={`${
+            props.alert_geo_input ? "border-2 border-red-500" : ""
+          } w-80`}
+          defaultValue={defaultValue}
+          ref={geo_input}
+        ></input>
+      </div>
+    );
+  });
+
+  const [geo_name, set_geo_name] = useState("");
+  useEffect(() => {
+    set_geo_name(location.state.geo_name);
+  }, [location.state.geo_name]);
+  let gmap_link_name = "";
+  const handelChange_name_input = (event) => {
+    gmap_link_name = event.target.value;
+    console.log(gmap_link_name);
+  };
+  const handelOnclick_name_button = (event) => {
+    window.open("https://maps.google.co.in/maps?q=" + gmap_link_name, "_blank");
+  };
+  const Name = React.memo((props) => {
+    return (
+      <div className="flow-root p-1">
+        <p className="inline">Name:</p>
+        <button
+          onClick={props.handelOnclick_name_button}
+          className="antialiased inline items-end"
+        >
+          <span className="text-blue-600">Open </span>
+          <span className="text-red-600">in </span>
+          <span className="text-yellow-600">Google</span>
+        </button>
+        <input
+          className={`${
+            props.alert_name_input ? "border-2 border-red-500" : ""
+          } w-80 block`}
+          defaultValue={props.geo_name}
+          ref={name_input}
+          onInput={props.handelChange_name_input}
+        ></input>
+      </div>
+    );
+  });
+
+  const [review_points, set_review_points] = useState(0);
+  useEffect(() => {
+    set_review_points(location.state.review_points);
+  }, [location.state.review_points]);
+  const Review = React.memo((props) => {
+    return (
+      <div className="flow-root p-1">
+        <p>Review:</p>
+        <input
+          className={`${
+            props.alert_review_input ? "border-2 border-red-500" : ""
+          } w-80`}
+          defaultValue={props.review_points}
+          ref={review_input}
+        ></input>
+      </div>
+    );
+  });
+
+  const [review_text, set_review_text] = useState("");
+  useEffect(() => {
+    set_review_text(location.state.review_text);
+  }, [location.state.review_text]);
+  const ReviewDetails = React.memo((props) => {
+    return (
+      <div className="flow-root p-1">
+        <p>Review details:</p>
+        <input
+          className={`w-80 h-12`}
+          defaultValue={props.review_text}
+          ref={review_details_input}
+        ></input>
+      </div>
+    );
+  });
 
   //SECTION control sidebar component state
   const [alert_name_input, set_alert_name_input] = useState(false);
@@ -111,53 +218,64 @@ const Dashboard = () => {
   }, [alert_review_input]);
   //!SECTION
 
-  //SECTION work with open in google
-  const [gmap_link_name, set_gmap_link_name] = useState("");
-  const intervalRef_gmap_link_name = useRef();
-  function change_gmap_link_name(props) {
-    setTimeout(() => {
-      set_gmap_link_name(props);
-    }, 100);
-  }
-  useEffect(() => {
-    intervalRef_gmap_link_name.current = gmap_link_name;
-  }, [gmap_link_name]);
-  const handelChange_name_input = (event) => {
-    change_gmap_link_name(event.target.value);
-  };
-  //!SECTION
-
+  const [submit_response, set_submit_response] = useState("");
   const handelClick_submit = (event) => {
-    console.log(name_input.current.value);
+    //console.log(name_input.current.value);
+    let latlng, lat, lng;
     if (name_input.current.value === "") {
       change_alert_name_input(true);
+      return false;
     } else {
       change_alert_name_input(false);
     }
     if (geo_input.current.value === "") {
       change_alert_geo_input(true);
+      return false;
     } else {
       change_alert_geo_input(false);
+      latlng = geo_input.current.value.split(",");
+      lat = latlng[0];
+      lng = latlng[1];
     }
     if (type_input.current.value === "") {
       change_alert_type_input(true);
+      return false;
     } else {
       change_alert_type_input(false);
     }
     if (review_input.current.value === "") {
       change_alert_review_input(true);
+      return false;
     } else {
       change_alert_review_input(false);
     }
+    if (review_details_input.current.value === "") {
+    } else {
+    }
+    axios
+      .get(
+        `${API_URL_CREATE}?n=${name_input.current.value}&lat=${lat}&lng=${lng}&type=${type_input.current.value}&r=${review_input.current.value}&rd=${review_details_input.current.value}`
+      )
+      .then(({ data }) => {
+        console.log(data);
+        set_submit_response(data);
+      });
   };
 
   const handelClick_clear = (event) => {
-    change_gmap_link_name("");
     name_input.current.value = "";
+    set_geo_name("");
     geo_input.current.value = "";
+    set_lng("");
+    set_lat("");
     type_input.current.value = "";
+    set_type_name("");
     review_input.current.value = "";
+    set_review_points("");
     review_details_input.current.value = "";
+    set_review_text("");
+
+    set_submit_response("");
   };
 
   return (
@@ -204,65 +322,24 @@ const Dashboard = () => {
           correct_display ? "hidden" : ""
         } fixed bg-gray-100 inset-x-0 inset-y-12`}
       >
-        <div className="flow-root p-1">
-          <p className="inline">Name:</p>
-          <a
-            href={`https://maps.google.co.in/maps?q=${gmap_link_name}`}
-            target="_blank"
-            rel="noreferrer"
-            className="text-purple-400 antialiased inline items-end"
-          >
-            <span className="text-blue-600">Open </span>
-            <span className="text-red-600">in </span>
-            <span className="text-yellow-600">Google</span>
-          </a>
-          <input
-            className={`${
-              alert_name_input ? "border-2 border-red-500" : ""
-            } w-80 block`}
-            defaultValue={info_name}
-            ref={name_input}
-            onInput={handelChange_name_input}
-          ></input>
-        </div>
-        <div className="flow-root p-1">
-          <p>Geo Info:</p>
-          <input
-            className={`${
-              alert_geo_input ? "border-2 border-red-500" : ""
-            } w-80`}
-            defaultValue={marker_pos.lat + "," + marker_pos.lat}
-            ref={geo_input}
-          ></input>
-        </div>
-        <div className="flow-root p-1">
-          <p>Type:</p>
-          <input
-            className={`${
-              alert_type_input ? "border-2 border-red-500" : ""
-            } w-80`}
-            defaultValue={type}
-            ref={type_input}
-          ></input>
-        </div>
-        <div className="flow-root p-1">
-          <p>Review:</p>
-          <input
-            className={`${
-              alert_review_input ? "border-2 border-red-500" : ""
-            } w-80`}
-            defaultValue={review}
-            ref={review_input}
-          ></input>
-        </div>
-        <div className="flow-root p-1">
-          <p>Review details:</p>
-          <input
-            className={`w-80 h-12`}
-            defaultValue={review_details}
-            ref={review_details_input}
-          ></input>
-        </div>
+        <Name
+          alert_name_input={alert_name_input}
+          geo_name={geo_name}
+          handelChange_name_input={handelChange_name_input}
+          handelOnclick_name_button={handelOnclick_name_button}
+          gmap_link_name={gmap_link_name}
+        ></Name>
+        <GeoInfo
+          alert_geo_input={alert_geo_input}
+          lng={lng}
+          lat={lat}
+        ></GeoInfo>
+        <Type alert_type_input={alert_type_input} type_name={type_name}></Type>
+        <Review
+          alert_review_input={alert_review_input}
+          review_points={review_points}
+        ></Review>
+        <ReviewDetails review_text={review_text}></ReviewDetails>
         <div className="py-2">
           <button
             type="submit"
@@ -281,6 +358,7 @@ const Dashboard = () => {
             clear
           </button>
         </div>
+        <p>{submit_response}</p>
       </div>
     </Fragment>
   );
