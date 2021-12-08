@@ -4,6 +4,8 @@ import axios from "axios";
 
 const API_URL_CREATE =
   "https://asianfood.heguangyu.net/create_location_react.php";
+const API_URL_UPDATE =
+  "https://asianfood.heguangyu.net/update_location_react.php";
 
 const Dashboard = () => {
   const userInput = useRef();
@@ -14,6 +16,7 @@ const Dashboard = () => {
   const type_input = useRef();
   const review_input = useRef();
   const review_details_input = useRef();
+
 
   //SECTION control sidebar component state
   const [correct_display, set_correct_display] = useState(false);
@@ -141,6 +144,12 @@ const Dashboard = () => {
     );
   });
 
+  if (geo_name === "" || geo_name === null) {
+    change_submit_state(false);
+  }else{
+    change_submit_state(true);
+  }
+
   const [review_points, set_review_points] = useState(0);
   useEffect(() => {
     set_review_points(location.state.review_points);
@@ -230,7 +239,7 @@ const Dashboard = () => {
   //!SECTION
 
   const [submit_response, set_submit_response] = useState("");
-  const handelClick_submit = (event) => {
+  const handelClick_update = (event) => {
     //console.log(name_input.current.value);
     let latlng, lat, lng;
     if (name_input.current.value === "") {
@@ -273,6 +282,49 @@ const Dashboard = () => {
       });
   };
 
+  const handelClick_submit = (event) => {
+    console.log("submitting");
+    let latlng, lat, lng;
+    if (name_input.current.value === "") {
+      change_alert_name_input(true);
+      return false;
+    } else {
+      change_alert_name_input(false);
+    }
+    if (geo_input.current.value === "") {
+      change_alert_geo_input(true);
+      return false;
+    } else {
+      change_alert_geo_input(false);
+      latlng = geo_input.current.value.split(",");
+      lat = latlng[0];
+      lng = latlng[1];
+    }
+    if (type_input.current.value === "") {
+      change_alert_type_input(true);
+      return false;
+    } else {
+      change_alert_type_input(false);
+    }
+    if (review_input.current.value === "") {
+      change_alert_review_input(true);
+      return false;
+    } else {
+      change_alert_review_input(false);
+    }
+    if (review_details_input.current.value === "") {
+    } else {
+    }
+    axios
+      .get(
+        `${API_URL_UPDATE}?n=${name_input.current.value}&lat=${lat}&lng=${lng}&type=${type_input.current.value}&r=${review_input.current.value}&rd=${review_details_input.current.value}`
+      )
+      .then(({ data }) => {
+        console.log(data);
+        set_submit_response(data);
+      });
+  };
+
   const handelClick_clear = (event) => {
     name_input.current.value = "";
     set_geo_name("");
@@ -287,7 +339,22 @@ const Dashboard = () => {
     set_review_text("");
 
     set_submit_response("");
+
+    change_submit_state(true);
   };
+
+  //SECTION control sidebar component state
+  const [submit_state, set_submit_state] = useState(false);
+  const intervalRef_submit_state = useRef();
+  function change_submit_state(props) {
+    setTimeout(() => {
+      set_submit_state(props);
+    }, 100);
+  }
+  useEffect(() => {
+    intervalRef_submit_state.current = submit_state;
+  }, [submit_state]);
+  //!SECTION
 
   return (
     <Fragment>
@@ -355,9 +422,22 @@ const Dashboard = () => {
           <button
             type="submit"
             onClick={handelClick_submit}
-            className="group relative w-80 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className={`${
+              submit_state ? "" : "hidden"
+            } group relative w-80 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
           >
             submit
+          </button>
+        </div>
+        <div className="py-1">
+          <button
+            type="submit"
+            onClick={handelClick_update}
+            className={`${
+              submit_state ? "hidden" : ""
+            } group relative w-80 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+          >
+            update
           </button>
         </div>
         <div>
