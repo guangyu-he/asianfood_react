@@ -23,7 +23,7 @@ class App extends Component {
             {/* Using path="*"" means "match anything", so this route
                       acts like a catch-all for URLs that we don't have explicit
                       routes for. */}
-            <Route path="/NoMatch" element={<NoMatch />} />
+            <Route path="*" element={<NoMatch />} />
           </Route>
         </Routes>
       </Fragment>
