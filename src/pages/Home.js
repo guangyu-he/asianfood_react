@@ -122,38 +122,39 @@ function Home() {
       <div
         className={`${
           info_state ? "" : "hidden"
-        } fixed z-30 bottom-6 h-32 inset-x-0 flex`}
+        } fixed z-30 bg-white rounded-lg bottom-6
+        lg:left-1/4 lg:w-2/4 lg:h-32
+        left-0 w-full h-32
+        `}
       >
-        <div className="w-1/4 "></div>
-        <div className="w-2/4 bg-white rounded-lg h-full">
-          <div className="inline-flex">
-            <div className="content-center">
-              <h2 className="text-purple-600 antialiased text-3xl">
-                {info_name}
-              </h2>
-            </div>
-            <div className="w-40">
-              <h3 className="text-purple-400 antialiased text-1xl  items-end">
-                {type}
-              </h3>
-              <a
-                href={`https://maps.google.co.in/maps?q=${info_name}`}
-                target="_blank"
-                rel="noreferrer"
-                className="text-purple-400 antialiased text-1xl  items-end"
-              >
-                <span className="text-blue-600">Open </span><span className="text-red-600">in </span><span className="text-yellow-600">Google</span>
-              </a>
-            </div>
+        <div className="inline-flex">
+          <div className="content-center">
+            <h2 className="text-purple-600 antialiased text-3xl">
+              {info_name}
+            </h2>
           </div>
-          <div>
-            <div className="inline-flex">{review_points_display(review)}</div>
-          </div>
-          <div>
-            <div>{review_details}</div>
+          <div className="w-40">
+            <h3 className="text-purple-400 antialiased text-1xl  items-end">
+              {type}
+            </h3>
+            <a
+              href={`https://maps.google.co.in/maps?q=${info_name}`}
+              target="_blank"
+              rel="noreferrer"
+              className="text-purple-400 antialiased text-1xl  items-end"
+            >
+              <span className="text-blue-600">Open </span>
+              <span className="text-red-600">in </span>
+              <span className="text-yellow-600">Google</span>
+            </a>
           </div>
         </div>
-        <div className="w-1/4 "></div>
+        <div>
+          <div className="inline-flex">{review_points_display(review)}</div>
+        </div>
+        <div>
+          <div>{review_details}</div>
+        </div>
       </div>
     </Fragment>
   ) : (

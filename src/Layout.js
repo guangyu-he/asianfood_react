@@ -25,10 +25,14 @@ const Sidebar = (props) => {
     <div
       className={`${
         props.sidebar_state ? "" : "hidden"
-      } absolute z-20 top-12 w-64 h-screen bg-white`}
+      } absolute z-40 top-12 w-64 h-screen bg-white`}
     >
       <li className="inline-flex items-center p-2 mr-4 text-gray-700">
-        <Link to="/" className="text-xl font-bold uppercase tracking-wide">
+        <Link
+          to="/"
+          className="text-xl font-bold uppercase tracking-wide"
+          onClick={() => props.change_searchbar_state(true, "home")}
+        >
           Asian Food in Berlin
         </Link>
       </li>
