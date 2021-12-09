@@ -14,7 +14,7 @@ const Type = (props) => {
       <input
         className={`${
           props.alert_type_input ? "border-2 border-red-500" : ""
-        } lg:w-80 w-full`}
+        } w-full`}
         value={defaultValue}
         onChange={handleOnChange}
         ref={props.type_input}

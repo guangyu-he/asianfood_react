@@ -22,7 +22,7 @@ const Name = (props) => {
       <input
         className={`${
           props.alert_name_input ? "border-2 border-red-500" : ""
-        } lg:w-80 w-full block`}
+        } w-full block`}
         value={defaultValue}
         ref={props.name_input}
         onInput={props.handelChange_name_input}

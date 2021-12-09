@@ -12,7 +12,7 @@ const ReviewDetails = (props) => {
     <div className="flow-root p-1">
       <p>Review details:</p>
       <input
-        className={`lg:w-80 w-full h-12`}
+        className={` w-full h-12`}
         value={defaultValue}
         onChange={handleOnChange}
         ref={props.review_details_input}
