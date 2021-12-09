@@ -14,7 +14,7 @@ const GeoInfo = (props) => {
       <input
         className={`${
           props.alert_geo_input ? "border-2 border-red-500" : ""
-        } w-80`}
+        } lg:w-80 w-full`}
         value={defaultValue}
         onChange={handleOnChange}
         ref={props.geo_input}

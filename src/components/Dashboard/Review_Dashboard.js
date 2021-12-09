@@ -14,7 +14,7 @@ const Review = (props) => {
       <input
         className={`${
           props.alert_review_input ? "border-2 border-red-500" : ""
-        } w-80`}
+        } lg:w-80 w-full`}
         value={defaultValue}
         onChange={handleOnChange}
         ref={props.review_input}

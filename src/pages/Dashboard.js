@@ -273,7 +273,7 @@ const Dashboard = () => {
       <div
         className={`${
           correct_display ? "hidden" : ""
-        } fixed bg-gray-100 inset-x-0 inset-y-12`}
+        } fixed w-full lg:left-64 inset-y-12`}
       >
         <Name
           alert_name_input={alert_name_input}
