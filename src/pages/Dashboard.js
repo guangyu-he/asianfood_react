@@ -219,9 +219,8 @@ const Dashboard = () => {
   return (
     <Fragment>
       <div
-        className={`${
-          login_display ? "" : "hidden"
-        } fixed w-full inset-y-1/4 lg:w-1/3 lg:inset-x-1/3 lg:inset-y-1/4`}
+        className={`${login_display ? "" : "hidden"} fixed 
+        w-full inset-y-1/4 lg:w-1/3 lg:inset-x-1/3`}
       >
         <Login
           userInput={userInput}
@@ -230,9 +229,8 @@ const Dashboard = () => {
         ></Login>
       </div>
       <div
-        className={`${
-          login_display ? "hidden" : ""
-        } fixed w-full inset-y-1/4 lg:w-1/3 lg:inset-x-1/3 lg:inset-y-1/4`}
+        className={`${login_display ? "hidden" : ""} fixed 
+        w-full inset-y-1/4 lg:w-1/3 lg:inset-x-1/3`}
       >
         <Name
           alert_name_input={alert_name_input}
