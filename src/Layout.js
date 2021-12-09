@@ -33,9 +33,7 @@ const Layout = () => {
   //ANCHOR create ref for searchInput
   const searchInput = useRef();
 
-  //SECTION custom async useState hooks
-  //SECTION control sidebar component state
-  const [sidebar_state, set_sidebar_state] = useState(false);
+  /*const [sidebar_state, set_sidebar_state] = useState(false);
   const intervalRef_sidebar_state = useRef();
   function change_sidebar_state() {
     setTimeout(() => {
@@ -44,21 +42,27 @@ const Layout = () => {
   }
   useEffect(() => {
     intervalRef_sidebar_state.current = sidebar_state;
-  }, [sidebar_state]);
+  }, [sidebar_state]);*/
+
+  //SECTION control sidebar component state
+  const [sidebar_state, set_sidebar_state] = useState(false);
+  function change_sidebar_state() {
+    setTimeout(() => {
+      set_sidebar_state(!sidebar_state);
+    }, 100);
+  }
   //!SECTION
 
   //SECTION control searchbar component state
-  const [searchbar_state, set_searchbar_state] = useState(true);
-
   let sidebar_item_ini = {
     home: true,
     dashboard: false,
     about: false,
   };
-  const [sidebar_item, set_sidebar_item] = useState(sidebar_item_ini);
-  const intervalRef_sidebar_item = useRef();
 
-  const intervalRef_searchbar_state = useRef();
+  const [searchbar_state, set_searchbar_state] = useState(true);
+  const [sidebar_item, set_sidebar_item] = useState(sidebar_item_ini);
+
   function change_searchbar_state(props, item) {
     sidebar_item_ini.home = false;
     sidebar_item_ini.dashboard = false;
@@ -78,37 +82,24 @@ const Layout = () => {
       change_sidebar_state();
     }, 100);
   }
-  useEffect(() => {
-    intervalRef_searchbar_state.current = searchbar_state;
-    intervalRef_sidebar_item.current = sidebar_item;
-  }, [searchbar_state, sidebar_item]);
   //!SECTION
 
   //SECTION control listview component state
   const [listview_state, set_listview_state] = useState(false);
-  const intervalRef_listview_state = useRef();
   function change_listview_state(props) {
     setTimeout(() => {
       set_listview_state(props);
     }, 100);
   }
-  useEffect(() => {
-    intervalRef_listview_state.current = listview_state;
-  }, [listview_state]);
   //!SECTION
 
   //SECTION set list items
   const [listitem, set_listitem] = useState([]);
-  const intervalRef_listitem = useRef();
   function change_listitem(props) {
     setTimeout(() => {
       set_listitem(props);
     }, 100);
   }
-  useEffect(() => {
-    intervalRef_listitem.current = listitem;
-  }, [listitem]);
-  //!SECTION
   //!SECTION
 
   //SECTION do when input has changed
