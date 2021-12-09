@@ -9,8 +9,8 @@ import Review from "../components/Dashboard/Review_Dashboard";
 import ReviewDetails from "../components/Dashboard/ReviewDetails_Dashboard";
 import Buttons from "../components/Dashboard/Buttons_Dashboard";
 
-const API_URL_CREATE =
-  "https://asianfood.heguangyu.net/create_location_react.php";
+/*const API_URL_CREATE =
+  "https://asianfood.heguangyu.net/create_location_react.php";*/
 const API_URL_UPDATE =
   "https://asianfood.heguangyu.net/update_location_react.php";
 
@@ -115,19 +115,20 @@ const Dashboard = () => {
 
   //SECTION control clear button state
   const handelButton_clear = (event) => {
+    setTimeout(() => {
+      set_geo_name("");
+      set_lng("");
+      set_lat("");
+      set_type_name("");
+      set_review_points("");
+      set_review_text("");
+      set_submit_response("");
+    }, 100);
     name_input.current.defaultValue = "";
     geo_input.current.defaultValue = "";
     type_input.current.defaultValue = "";
     review_input.current.defaultValue = "";
     review_details_input.current.defaultValue = "";
-
-    set_geo_name("");
-    set_lng("");
-    set_lat("");
-    set_type_name("");
-    set_review_points("");
-    set_review_text("");
-    set_submit_response("");
   };
   //!SECTION
 
