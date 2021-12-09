@@ -25,7 +25,7 @@ const Searchbar = (props) => {
       <input
         className={`${
           props.searchbar_state ? "" : "hidden"
-        } left-12 absolute peer h-full w-full outline-none text-sm text-gray-700 pr-2`}
+        } left-12 absolute peer h-full w-full outline-none text-sm text-gray-700 pr-2 text-2xl`}
         type="text"
         id="search"
         ref={props.searchInput}
