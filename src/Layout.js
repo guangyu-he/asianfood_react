@@ -205,6 +205,8 @@ const Layout = () => {
         sidebar_item_ini.about = true;
       }
       set_sidebar_item(sidebar_item_ini);
+
+      change_sidebar_state();
     }, 100);
   }
   useEffect(() => {
