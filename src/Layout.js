@@ -51,7 +51,7 @@ const Layout = () => {
       set_sidebar_state(!sidebar_state);
     }, 100);
   }
-  //!SECTION
+  //!SECTION 
 
   //SECTION control searchbar component state
   let sidebar_item_ini = {
@@ -106,6 +106,7 @@ const Layout = () => {
   const handleInputChange = async (event) => {
     //ANCHOR open item listview
     change_listview_state(true);
+    change_listitem(["loading..."]);
 
     let query = event.target.value;
     let results = [];
@@ -133,6 +134,7 @@ const Layout = () => {
       }
       change_listitem(names);
     } else if (!query) {
+      change_listview_state(false);
     }
   };
   //!SECTION
@@ -156,14 +158,16 @@ const Layout = () => {
   const navigate = useNavigate();
 
   const handelClick_item = async (query) => {
-    //ANCHOR close list view
-    change_listview_state(false);
 
     let results = [],
       names = "",
       type = "",
       review = "",
       review_details = "";
+
+    //ANCHOR close list view
+    change_listitem(["loading..."]);
+
 
     if (query === "Korean Restaurants...") {
       await axios.get(`${API_URL_NAME_OFTYPE}?n=ko`).then(({ data }) => {
@@ -175,7 +179,7 @@ const Layout = () => {
           names = [...names, results[i]];
         }
       }
-      change_listview_state(true);
+      //change_listview_state(true);
       change_listitem(names);
       return false;
     } else if (query === "Chinese Restaurants...") {
@@ -188,7 +192,7 @@ const Layout = () => {
           names = [...names, results[i]];
         }
       }
-      change_listview_state(true);
+      //change_listview_state(true);
       change_listitem(names);
       return false;
     } else if (query === "Japanese Restaurants...") {
@@ -201,7 +205,7 @@ const Layout = () => {
           names = [...names, results[i]];
         }
       }
-      change_listview_state(true);
+      //change_listview_state(true);
       change_listitem(names);
       return false;
     } else if (query === "Vietnamese Restaurants...") {
@@ -214,14 +218,14 @@ const Layout = () => {
           names = [...names, results[i]];
         }
       }
-      change_listview_state(true);
+      //change_listview_state(true);
       change_listitem(names);
       return false;
     } else {
     }
 
     if (query && query.length > 0) {
-      await axios.get(`${API_URL_GEO}?n=${query}`).then(({ data }) => {
+        await axios.get(`${API_URL_GEO}?n=${query}`).then(({ data }) => {
         results = data.split(",");
       });
       for (let i = 0; i < results.length; i++) {
@@ -252,6 +256,9 @@ const Layout = () => {
       };
       //ANCHOR navigate to home.js with geo object
       //console.log(window.location.pathname);
+
+      change_listview_state(false);//ANCHOR close list when loaded
+
       navigate(window.location.pathname, { state: geo });
 
       //ANCHOR clean searchbar input
