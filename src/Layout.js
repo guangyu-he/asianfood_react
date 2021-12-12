@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useRef, useEffect } from "react";
+import React, { useState, Fragment, useRef } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -26,9 +26,9 @@ const API_URL_NAME_OFTYPE =
 
 const Layout = () => {
   //ANCHOR change title of the page
-  useEffect(() => {
+  /*useEffect(() => {
     document.title = "Asian Food in Berlin";
-  }, []);
+  }, []);*/
 
   //ANCHOR create ref for searchInput
   const searchInput = useRef();
