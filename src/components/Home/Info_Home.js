@@ -26,6 +26,7 @@ const Info = (props) => {
       } fixed z-30 bg-white rounded-lg bottom-6
         lg:left-1/4 lg:w-2/4 lg:h-32
         left-0 w-full h-32
+        dark:bg-gray-900
         `}
     >
       <div className="inline-flex">
@@ -51,10 +52,10 @@ const Info = (props) => {
         </div>
       </div>
       <div>
-        <div className="inline-flex">{review_points_display(props.review)}</div>
+        <div className="inline-flex dark:text-white">{review_points_display(props.review)}</div>
       </div>
       <div>
-        <div>{props.review_details}</div>
+        <div className="dark:text-white">{props.review_details}</div>
       </div>
     </div>
   );
