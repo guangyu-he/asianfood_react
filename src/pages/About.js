@@ -1,4 +1,5 @@
 import React from "react";
+import logo from "../media/icon.png";
 
 const About = () => {
   return (
@@ -6,7 +7,7 @@ const About = () => {
       <div className="top-16 relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg">
         <div className="relative flex gap-4">
           <img
-            src="https://icons.iconarchive.com/icons/diversity-avatars/avatars/256/charlie-chaplin-icon.png"
+            src={logo}
             className="relative rounded-lg -top-8 -mb-4 bg-white border h-20 w-20"
             alt=""
             loading="lazy"
@@ -28,7 +29,7 @@ const About = () => {
       <div className="top-16 relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg">
         <div className="relative flex gap-4">
           <img
-            src="https://icons.iconarchive.com/icons/diversity-avatars/avatars/256/charlie-chaplin-icon.png"
+            src={logo}
             className="relative rounded-lg -top-8 -mb-4 bg-white border h-20 w-20"
             alt=""
             loading="lazy"
