@@ -51,7 +51,7 @@ const Layout = () => {
       set_sidebar_state(!sidebar_state);
     }, 100);
   }
-  //!SECTION 
+  //!SECTION
 
   //SECTION control searchbar component state
   let sidebar_item_ini = {
@@ -113,14 +113,19 @@ const Layout = () => {
     let names = [];
 
     //ANCHOR require data from php
+    let kor_name_list = ["k", "K", "ko", "Ko", "kor", "Kor"];
+    let chi_name_list = ["c", "C", "ch", "Ch", "chi", "Chi"];
+    let jap_name_list = ["j", "J", "ja", "Ja", "jap", "Jap"];
+    let vie_name_list = ["v", "V", "vi", "Vi", "vie", "Vie"];
+
     if (query && query.length > 0) {
-      if (query === "k" || query === "ko" || query === "kor") {
+      if (kor_name_list.indexOf(query) >= 0) {
         names = [...names, "Korean Restaurants..."];
-      } else if (query === "c" || query === "ch" || query === "chi") {
+      } else if (chi_name_list.indexOf(query) >= 0) {
         names = [...names, "Chinese Restaurants..."];
-      } else if (query === "j" || query === "ja" || query === "jap") {
+      } else if (jap_name_list.indexOf(query) >= 0) {
         names = [...names, "Japanese Restaurants..."];
-      } else if (query === "v" || query === "vi" || query === "vie") {
+      } else if (vie_name_list.indexOf(query) >= 0) {
         names = [...names, "Vietnamese Restaurants..."];
       }
       await axios.get(`${API_URL_NAME}?n=${query}`).then(({ data }) => {
@@ -158,7 +163,6 @@ const Layout = () => {
   const navigate = useNavigate();
 
   const handelClick_item = async (query) => {
-
     let results = [],
       names = "",
       type = "",
@@ -167,7 +171,6 @@ const Layout = () => {
 
     //ANCHOR close list view
     change_listitem(["loading..."]);
-
 
     if (query === "Korean Restaurants...") {
       await axios.get(`${API_URL_NAME_OFTYPE}?n=ko`).then(({ data }) => {
@@ -225,7 +228,7 @@ const Layout = () => {
     }
 
     if (query && query.length > 0) {
-        await axios.get(`${API_URL_GEO}?n=${query}`).then(({ data }) => {
+      await axios.get(`${API_URL_GEO}?n=${query}`).then(({ data }) => {
         results = data.split(",");
       });
       for (let i = 0; i < results.length; i++) {
@@ -257,7 +260,7 @@ const Layout = () => {
       //ANCHOR navigate to home.js with geo object
       //console.log(window.location.pathname);
 
-      change_listview_state(false);//ANCHOR close list when loaded
+      change_listview_state(false); //ANCHOR close list when loaded
 
       navigate(window.location.pathname, { state: geo });
 
