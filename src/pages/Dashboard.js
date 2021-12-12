@@ -220,7 +220,7 @@ const Dashboard = () => {
     <Fragment>
       <div
         className={`${login_display ? "" : "hidden"} fixed 
-        w-full inset-y-1/4 lg:w-1/3 lg:inset-x-1/3`}
+        w-full h-full dark:bg-gray-700`}
       >
         <Login
           userInput={userInput}
@@ -230,41 +230,44 @@ const Dashboard = () => {
       </div>
       <div
         className={`${login_display ? "hidden" : ""} fixed 
-        w-full inset-y-1/4 lg:w-1/3 lg:inset-x-1/3`}
+        w-full h-full dark:bg-gray-700`}
       >
-        <Name
-          alert_name_input={alert_name_input}
-          geo_name={geo_name}
-          handelChange_name_input={handelChange_name_input}
-          handelOnclick_name_button={handelOnclick_name_button}
-          gmap_link_name={gmap_link_name}
-          name_input={name_input}
-        ></Name>
-        <GeoInfo
-          alert_geo_input={alert_geo_input}
-          lng={lng}
-          lat={lat}
-          geo_input={geo_input}
-        ></GeoInfo>
-        <Type
-          alert_type_input={alert_type_input}
-          type_name={type_name}
-          type_input={type_input}
-        ></Type>
-        <Review
-          alert_review_input={alert_review_input}
-          review_points={review_points}
-          review_input={review_input}
-        ></Review>
-        <ReviewDetails
-          review_text={review_text}
-          review_details_input={review_details_input}
-        ></ReviewDetails>
-        <Buttons
-          handelClick_submit={handelClick_submit}
-          handelButton_clear={handelButton_clear}
-        ></Buttons>
-        <p>{submit_response}</p>
+        <div className="absolute w-full inset-y-1/3
+        lg:w-1/2 lg:inset-x-1/4">
+          <Name
+            alert_name_input={alert_name_input}
+            geo_name={geo_name}
+            handelChange_name_input={handelChange_name_input}
+            handelOnclick_name_button={handelOnclick_name_button}
+            gmap_link_name={gmap_link_name}
+            name_input={name_input}
+          ></Name>
+          <GeoInfo
+            alert_geo_input={alert_geo_input}
+            lng={lng}
+            lat={lat}
+            geo_input={geo_input}
+          ></GeoInfo>
+          <Type
+            alert_type_input={alert_type_input}
+            type_name={type_name}
+            type_input={type_input}
+          ></Type>
+          <Review
+            alert_review_input={alert_review_input}
+            review_points={review_points}
+            review_input={review_input}
+          ></Review>
+          <ReviewDetails
+            review_text={review_text}
+            review_details_input={review_details_input}
+          ></ReviewDetails>
+          <Buttons
+            handelClick_submit={handelClick_submit}
+            handelButton_clear={handelButton_clear}
+          ></Buttons>
+          <p>{submit_response}</p>
+        </div>
       </div>
     </Fragment>
   );

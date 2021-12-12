@@ -2,10 +2,10 @@ import React from "react";
 
 const Searchbar = (props) => {
   return (
-    <div className="fixed z-10 flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
+    <div className="fixed z-10 flex items-center inset-x-4 top-2 h-12 rounded-lg shadow-lg bg-white dark:bg-gray-900 overflow-hidden">
       <button
         onClick={props.handelClick_button}
-        className="left-0 absolute inline-flex p-3 rounded text-white ml-auto text-gray-700 outline-none"
+        className="left-0 absolute inline-flex p-3 rounded ml-auto text-gray-700 dark:text-white outline-none"
       >
         <svg
           className="w-6 h-6"
@@ -25,7 +25,7 @@ const Searchbar = (props) => {
       <input
         className={`${
           props.searchbar_state ? "" : "hidden"
-        } left-12 absolute peer h-full w-full outline-none text-sm text-gray-700 pr-2 text-2xl`}
+        } left-12 absolute peer h-full w-full outline-none text-sm text-gray-700 dark:bg-gray-900 dark:text-white pr-2 text-2xl`}
         type="text"
         id="search"
         ref={props.searchInput}
