@@ -15,19 +15,24 @@ const containerStyle = {
   position: "absolute",
 };
 
-const mapOptions = {
-  zoom: 13,
-  zoomControl: true,
-  scaleControl: false,
-  fullscreenControl: false,
-  mapTypeControl: false,
-  streetViewControl: false,
-  gestureHandling: "greedy",
-  maxZoom: 15 + 3,
-  mapId: "e04d39f76af137b0",
-};
-
 function Home() {
+  let mapOptions = {
+    zoom: 13,
+    zoomControl: true,
+    scaleControl: false,
+    fullscreenControl: false,
+    mapTypeControl: false,
+    streetViewControl: false,
+    gestureHandling: "greedy",
+    maxZoom: 15 + 3,
+    mapId: "e04d39f76af137b0",
+  };
+  
+  if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    console.log("dark mode on");
+    mapOptions.mapId = "da23336c10c105b2";
+  }
+
   let marker_pos = "";
   let info_name = "";
   let info_state = false;

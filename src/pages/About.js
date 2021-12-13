@@ -48,7 +48,7 @@ const About = () => {
                     <span className="fa-solid fa-trash"></span>
                   </button>
                 </div>
-                <p className="text-gray-400 text-sm">Data Analytics</p>
+                <p className="text-gray-400 text-sm">Data Analyst</p>
               </div>
             </div>
             <p className="-mt-4 text-gray-500">Hello World!</p>
