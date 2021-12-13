@@ -27,7 +27,7 @@ function Home() {
     maxZoom: 15 + 3,
     mapId: "e04d39f76af137b0",
   };
-  
+
   if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
     console.log("dark mode on");
     mapOptions.mapId = "da23336c10c105b2";
@@ -95,14 +95,17 @@ function Home() {
           options={{ closeBoxURL: "", enableEventPropagation: true }}
         >
           <div
-            style={{
-              backgroundColor: "lightgray",
-              opacity: 0.8,
-              padding: 12,
-              width: "120px",
-            }}
+          className="
+          p-2 w-24
+          shadow-lg rounded-lg
+          bg-white dark:bg-gray-500
+          "
+          style={{opacity: "0.8"}}
           >
-            <div style={{ fontSize: 16, fontColor: `dark-black` }}>
+            <div className="
+            text-base
+            dark:text-white 
+            ">
               {info_name}
             </div>
           </div>

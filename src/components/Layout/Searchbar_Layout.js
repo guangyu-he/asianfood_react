@@ -2,7 +2,12 @@ import React from "react";
 
 const Searchbar = (props) => {
   return (
-    <div className="fixed z-10 flex items-center inset-x-4 top-2 h-12 rounded-lg shadow-lg bg-white dark:bg-gray-900 overflow-hidden">
+    <div className="
+    fixed z-10 fixed
+    inset-x-4 top-2 h-12 
+    rounded-lg shadow-lg 
+    bg-white dark:bg-gray-900
+    overflow-hidden">
       <button
         onClick={props.handelClick_button}
         className="left-0 absolute inline-flex p-3 rounded ml-auto text-gray-700 dark:text-white outline-none"
