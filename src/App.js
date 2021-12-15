@@ -7,6 +7,11 @@ import Dashboard from "./pages/Dashboard";
 import NoMatch from "./pages/NoMatch";
 import Layout from "./Layout";
 
+import ReactGA from "react-ga";
+
+ReactGA.initialize("UA-203426892-2");
+ReactGA.pageview(window.location.pathname + window.location.search);
+
 class App extends Component {
   render() {
     return (
