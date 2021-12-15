@@ -1,7 +1,13 @@
 <?php
+$handle = fopen('./dbpass.txt', 'r');
+while (!feof($handle)) {
+  $dbpass = fgets($handle, 1024);
+}
+fclose($handle);
+
 $dbhost = 'localhost';  // mysql服务器主机地址
 $dbuser = 'test';            // mysql用户名
-$dbpass = '0';          // mysql用户名密码
+//$dbpass = '0';          // mysql用户名密码
 $dbname = 'my_db';          // mysql用户名密码
 $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 
