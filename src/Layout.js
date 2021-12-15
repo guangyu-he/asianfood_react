@@ -6,23 +6,20 @@ import Sidebar from "./components/Layout/Sidebar_Layout";
 import Itemlist from "./components/Layout/Itemlist_Layout";
 import Searchbar from "./components/Layout/Searchbar_Layout";
 
-const API_URL_NAME =
-  "https://asianfood.heguangyu.net/return_location_name_react.php";
-
 const API_URL_GEO =
   "https://asianfood.heguangyu.net/return_location_geo_react.php";
 
 const API_URL_TYPE =
   "https://asianfood.heguangyu.net/return_location_type_react.php";
 
-const API_URL_REVIEW =
-  "https://asianfood.heguangyu.net/return_location_review_react.php";
-
 const API_URL_REVIEW_DETAILS =
   "https://asianfood.heguangyu.net/return_location_review_details_react.php";
 
 const API_URL_NAME_OFTYPE =
   "https://asianfood.heguangyu.net/return_location_name_oftype_react.php";
+
+const API_URL_NAME_ANDTYPE =
+  "https://asianfood.heguangyu.net/return_location_name_andtype_react.php";
 
 const Layout = () => {
   //ANCHOR change title of the page
@@ -33,6 +30,7 @@ const Layout = () => {
   //ANCHOR create ref for searchInput
   const searchInput = useRef();
 
+  //ANCHOR an async realization of useState;
   /*const [sidebar_state, set_sidebar_state] = useState(false);
   const intervalRef_sidebar_state = useRef();
   function change_sidebar_state() {
@@ -53,23 +51,25 @@ const Layout = () => {
   }
   //!SECTION
 
-  //SECTION control searchbar component state
+  //SECTION control searchbar input display state
+  //ANCHOR the initial hover state in sidebar
   let sidebar_item_ini = {
     home: true,
     dashboard: false,
     about: false,
   };
 
+  //ANCHOR initial input display state to true
   const [searchbar_state, set_searchbar_state] = useState(true);
+  //ANCHOR the initial hover state in sidebar
   const [sidebar_item, set_sidebar_item] = useState(sidebar_item_ini);
 
   function change_searchbar_state(props, item) {
+    //ANCHOR change hover state in sidebar
     sidebar_item_ini.home = false;
     sidebar_item_ini.dashboard = false;
     sidebar_item_ini.about = false;
     setTimeout(() => {
-      set_searchbar_state(props);
-
       if (item === "home") {
         sidebar_item_ini.home = true;
       } else if (item === "dashboard") {
@@ -79,6 +79,10 @@ const Layout = () => {
       }
       set_sidebar_item(sidebar_item_ini);
 
+      //ANCHOR change input component state according to items
+      set_searchbar_state(props);
+
+      //ANCHOR should close side bar after clicking items
       change_sidebar_state();
     }, 100);
   }
@@ -104,21 +108,22 @@ const Layout = () => {
 
   //SECTION do when input has changed
   const handleInputChange = async (event) => {
-    //ANCHOR open item listview
+    //ANCHOR open item listview and say loading
     change_listview_state(true);
     change_listitem(["loading..."]);
 
+    //ANCHOR query from input change
     let query = event.target.value;
-    let results = [];
-    let names = [];
 
-    //ANCHOR require data from php
+    //ANCHOR a query list for potential searching through type
     let kor_name_list = ["k", "K", "ko", "Ko", "kor", "Kor"];
     let chi_name_list = ["c", "C", "ch", "Ch", "chi", "Chi"];
     let jap_name_list = ["j", "J", "ja", "Ja", "jap", "Jap"];
     let vie_name_list = ["v", "V", "vi", "Vi", "vie", "Vie"];
 
     if (query && query.length > 0) {
+      //ANCHOR show option for searching by type
+      let names = [];
       if (kor_name_list.indexOf(query) >= 0) {
         names = [...names, "Korean Restaurants..."];
       } else if (chi_name_list.indexOf(query) >= 0) {
@@ -128,25 +133,26 @@ const Layout = () => {
       } else if (vie_name_list.indexOf(query) >= 0) {
         names = [...names, "Vietnamese Restaurants..."];
       }
-      await axios.get(`${API_URL_NAME}?n=${query}`).then(({ data }) => {
+
+      //ANCHOR require data from php
+      //ANCHOR display both name and review
+      let results = [];
+      await axios.get(`${API_URL_NAME_ANDTYPE}?n=${query}`).then(({ data }) => {
         results = data.split(",");
       });
+      //ANCHOR handle data into arrays
       for (let i = 0; i < results.length - 1; i++) {
         if (results[i] === undefined) {
         } else {
           names = [...names, results[i]];
         }
       }
+      //ANCHOR display arrays in list
       change_listitem(names);
     } else if (!query) {
+      //ANCHOR if nothing there, close the list view
       change_listview_state(false);
     }
-  };
-  //!SECTION
-
-  //SECTION open/close sidebar by clicking menu button
-  const handelClick_button = (event) => {
-    change_sidebar_state();
   };
   //!SECTION
 
@@ -163,72 +169,49 @@ const Layout = () => {
   const navigate = useNavigate();
 
   const handelClick_item = async (query) => {
+    //ANCHOR initial a result container
     let results = [],
       names = "",
       type = "",
-      review = "",
       review_details = "";
 
-    //ANCHOR close list view
+    //ANCHOR say loading when querying data form server
     change_listitem(["loading..."]);
 
+    //SECTION query data using type
+    let type_query = "";
     if (query === "Korean Restaurants...") {
-      await axios.get(`${API_URL_NAME_OFTYPE}?n=ko`).then(({ data }) => {
-        results = data.split(",");
-      });
-      for (let i = 0; i < results.length - 1; i++) {
-        if (results[i] === undefined) {
-        } else {
-          names = [...names, results[i]];
-        }
-      }
-      //change_listview_state(true);
-      change_listitem(names);
-      return false;
+      type_query = "ko";
     } else if (query === "Chinese Restaurants...") {
-      await axios.get(`${API_URL_NAME_OFTYPE}?n=ch`).then(({ data }) => {
-        results = data.split(",");
-      });
-      for (let i = 0; i < results.length - 1; i++) {
-        if (results[i] === undefined) {
-        } else {
-          names = [...names, results[i]];
-        }
-      }
-      //change_listview_state(true);
-      change_listitem(names);
-      return false;
+      type_query = "ch";
     } else if (query === "Japanese Restaurants...") {
-      await axios.get(`${API_URL_NAME_OFTYPE}?n=ja`).then(({ data }) => {
-        results = data.split(",");
-      });
-      for (let i = 0; i < results.length - 1; i++) {
-        if (results[i] === undefined) {
-        } else {
-          names = [...names, results[i]];
-        }
-      }
-      //change_listview_state(true);
-      change_listitem(names);
-      return false;
+      type_query = "ja";
     } else if (query === "Vietnamese Restaurants...") {
-      await axios.get(`${API_URL_NAME_OFTYPE}?n=vi`).then(({ data }) => {
-        results = data.split(",");
-      });
-      for (let i = 0; i < results.length - 1; i++) {
-        if (results[i] === undefined) {
-        } else {
-          names = [...names, results[i]];
-        }
-      }
-      //change_listview_state(true);
-      change_listitem(names);
-      return false;
+      type_query = "vi";
     } else {
     }
+    if (type_query === "") {
+    } else {
+      await axios
+        .get(`${API_URL_NAME_OFTYPE}?n=${type_query}`)
+        .then(({ data }) => {
+          results = data.split(",");
+        });
+      for (let i = 0; i < results.length - 1; i++) {
+        if (results[i] === undefined) {
+        } else {
+          names = [...names, results[i]];
+        }
+      }
+      change_listitem(names);
+      return false;
+    }
+    //!SECTION
 
-    if (query && query.length > 0) {
-      await axios.get(`${API_URL_GEO}?n=${query}`).then(({ data }) => {
+    //ANCHOR separate name and review, only use name in query here and review later
+    let name_query = query.split(";")[0];
+    if (name_query && name_query.length > 0) {
+      await axios.get(`${API_URL_GEO}?n=${name_query}`).then(({ data }) => {
         results = data.split(",");
       });
       for (let i = 0; i < results.length; i++) {
@@ -237,14 +220,11 @@ const Layout = () => {
           names = [...names, results[i]];
         }
       }
-      await axios.get(`${API_URL_TYPE}?n=${query}`).then(({ data }) => {
+      await axios.get(`${API_URL_TYPE}?n=${name_query}`).then(({ data }) => {
         type = data;
       });
-      await axios.get(`${API_URL_REVIEW}?n=${query}`).then(({ data }) => {
-        review = data;
-      });
       await axios
-        .get(`${API_URL_REVIEW_DETAILS}?n=${query}`)
+        .get(`${API_URL_REVIEW_DETAILS}?n=${name_query}`)
         .then(({ data }) => {
           review_details = data;
         });
@@ -252,9 +232,9 @@ const Layout = () => {
       let geo = {
         lat: names[0],
         lng: names[1],
-        geo_name: query,
+        geo_name: name_query,
         type_name: type,
-        review_points: review,
+        review_points: query.split(";")[1],
         review_text: review_details,
       };
       //ANCHOR navigate to home.js with geo object
@@ -274,7 +254,7 @@ const Layout = () => {
   return (
     <Fragment>
       <Searchbar
-        handelClick_button={handelClick_button}
+        handelClick_button={change_sidebar_state}
         searchbar_state={searchbar_state}
         sidebar_state={sidebar_state}
         searchInput={searchInput}

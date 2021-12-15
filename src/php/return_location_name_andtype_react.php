@@ -15,7 +15,7 @@ mysqli_query($conn, "set names utf8");
 
 $name = $_GET['n'];
 
-$sql = "SELECT * FROM locations WHERE type like '$name%' ";
+$sql = "SELECT * FROM locations WHERE name like '$name%' ";
 
 mysqli_select_db($conn, $dbname);
 $retval = mysqli_query($conn, $sql);
@@ -27,6 +27,7 @@ if (mysqli_num_rows($retval) > 0) {
   }
 } else {
 }
+
 
 /* if(! $retval )
 {
