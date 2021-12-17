@@ -6,7 +6,7 @@ const About = () => {
     <div className="dark:bg-gray-700 h-screen w-full">
       <div className="relative top-16">
         <div className="">
-          <p className="text-2xl font-mono ml-4">About Us</p>
+          <p className="text-2xl font-mono ml-4 dark:text-white">About Us</p>
         </div>
         <div className="mt-12">
           <div className="grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg shadow-lg">
@@ -19,7 +19,7 @@ const About = () => {
               ></img>
               <div className="flex flex-col w-full">
                 <div className="flex flex-row justify-between">
-                  <p className="relative text-xl overflow-hidden">
+                  <p className="relative text-xl overflow-hidden dark:text-white">
                     Guangyu He
                   </p>
                   <button className="text-gray-500 text-xl">
@@ -41,7 +41,7 @@ const About = () => {
               ></img>
               <div className="flex flex-col w-full">
                 <div className="flex flex-row justify-between">
-                  <p className="relative text-xl overflow-hidden">
+                  <p className="relative text-xl overflow-hidden dark:text-white">
                     Sisi Huang
                   </p>
                   <button className="text-gray-500 text-xl">
