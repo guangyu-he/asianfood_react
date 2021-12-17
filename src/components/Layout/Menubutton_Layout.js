@@ -4,11 +4,11 @@ const Menubutton = React.memo((props) => {
   return (
     <div
       className="
-    fixed z-10 fixed
-    inset-x-4 top-2 h-12 
-    rounded-lg shadow-lg 
-    bg-white dark:bg-gray-900
-    overflow-hidden"
+      fixed z-30 fixed
+      w-12 left-4 top-2 h-12 
+      rounded-l-lg
+      bg-white dark:bg-gray-900
+      overflow-hidden"
     >
       <button
         className="left-0 absolute inline-flex p-3 rounded ml-auto text-gray-700 dark:text-white outline-none"

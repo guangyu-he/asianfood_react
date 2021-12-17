@@ -1,4 +1,6 @@
 import React, { useState, Fragment, useRef } from "react";
+import { Outlet } from "react-router-dom";
+
 import Menubutton from "./components/Layout/Menubutton_Layout";
 import Sidebar from "./components/Layout/Sidebar_Layout";
 
@@ -15,9 +17,12 @@ const Layout = React.memo((props) => {
 
   return (
     <Fragment>
-      <Sidebar sidebar_state={sidebar_state} change_sidebar_state={change_sidebar_state}/>
-      {/*<Outlet />*/}
-      <Menubutton change_sidebar_state={change_sidebar_state}></Menubutton>
+      <Sidebar
+        sidebar_state={sidebar_state}
+        change_sidebar_state={change_sidebar_state}
+      />
+      <Menubutton change_sidebar_state={change_sidebar_state}></Menubutton>{" "}
+      <Outlet />
     </Fragment>
   );
 });
