@@ -1,11 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+import Homebutton from "./Homebutton_Layout";
+import Dashboardbutton from "./Dashboardbutton_Layout";
+import Aboutbutton from "./Aboutbutton_Layout";
+
+const Title = React.memo((props) => {
+  console.log("Title: " + props);
+
+  return (
+    <li
+      className="inline-flex items-center p-2 mr-4 
+      text-gray-700 dark:text-white"
+    >
+      <Link to="/" className="text-xl font-bold uppercase tracking-wide">
+        Asian Food in Berlin
+      </Link>
+    </li>
+  );
+});
+
 const Sidebar = (props) => {
+  console.log("Sidebar: " + props);
+
+  const change_sidebar_state = props.change_sidebar_state.bind(this);
+  let sidebar_state = props.sidebar_state;
+
+  let item_selected_ini;
+  if (window.location.pathname === "/") {
+    item_selected_ini = "home";
+  } else if (window.location.pathname === "/Dashboard") {
+    item_selected_ini = "dashboard";
+  } else if (window.location.pathname === "/About") {
+    item_selected_ini = "about";
+  } else {
+    item_selected_ini = "home";
+  }
+  const [siderbar_item_selected, set_siderbar_item_selected] =
+    useState(item_selected_ini);
+  const change_sidebar_item_selected = (props) => {
+    setTimeout(() => {
+      set_siderbar_item_selected(props);
+      change_sidebar_state();
+    }, 10);
+  };
+
   return (
     <div
       className={`
-      ${props.sidebar_state ? "" : "hidden"}
+      ${sidebar_state ? "" : "hidden"}
       absolute z-40 fixed
       top-16 w-64 bottom-6 mx-4
       shadow-lg rounded-lg
@@ -13,70 +56,20 @@ const Sidebar = (props) => {
       overflow-hidden
       `}
     >
-      <li
-        className="inline-flex items-center p-2 mr-4 
-      text-gray-700 dark:text-white"
-      >
-        <Link
-          to="/"
-          className="text-xl font-bold uppercase tracking-wide"
-          onClick={() => props.change_searchbar_state(true, "home")}
-        >
-          Asian Food in Berlin
-        </Link>
-      </li>
-
+      <Title></Title>
       <nav className="mt-10">
-        <Link
-          to="/"
-          className={`${
-            props.sidebar_item.home
-              ? "bg-gray-200 border-gray-400 dark:bg-gray-500 dark:border-gray-300"
-              : "hover:bg-gray-300"
-          }
-          flex mt-5 py-2 px-8 
-          border-r-4 
-          text-gray-700
-          items-center 
-          `}
-          onClick={() => props.change_searchbar_state(true, "home")}
-        >
-          <span className="mx-4 font-medium dark:text-white">Home</span>
-        </Link>
-
-        <Link
-          to="/Dashboard"
-          className={`${
-            props.sidebar_item.dashboard
-              ? "bg-gray-200 border-gray-400 dark:bg-gray-500 dark:border-gray-300"
-              : "hover:bg-gray-300"
-          }
-          flex mt-5 py-2 px-8 
-          border-r-4 
-          text-gray-700
-          items-center 
-          `}
-          onClick={() => props.change_searchbar_state(true, "dashboard")}
-        >
-          <span className="mx-4 font-medium dark:text-white">Dashboard</span>
-        </Link>
-
-        <Link
-          to="/About"
-          className={`${
-            props.sidebar_item.about
-              ? "bg-gray-200 border-gray-400 dark:bg-gray-500 dark:border-gray-300"
-              : "hover:bg-gray-300"
-          }
-          flex mt-5 py-2 px-8 
-          border-r-4 
-          text-gray-700
-          items-center 
-          `}
-          onClick={() => props.change_searchbar_state(false, "about")}
-        >
-          <span className="mx-4 font-medium dark:text-white">About</span>
-        </Link>
+        <Homebutton
+          siderbar_item_selected={siderbar_item_selected}
+          change_sidebar_item_selected={change_sidebar_item_selected}
+        ></Homebutton>
+        <Dashboardbutton
+          siderbar_item_selected={siderbar_item_selected}
+          change_sidebar_item_selected={change_sidebar_item_selected}
+        ></Dashboardbutton>
+        <Aboutbutton
+          siderbar_item_selected={siderbar_item_selected}
+          change_sidebar_item_selected={change_sidebar_item_selected}
+        ></Aboutbutton>
       </nav>
     </div>
   );
