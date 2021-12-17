@@ -25,8 +25,6 @@ function Home() {
   //ANCHOR create ref for searchInput
   const searchInput = useRef();
 
-  let info_state = false;
-
   //SECTION do when input has changed
   const handleInputChange = async (event) => {
     //ANCHOR open item listview and say loading
@@ -99,6 +97,7 @@ function Home() {
   //ANCHOR using useNavigate to pass props
   //const navigate = useNavigate();
   let geo_ini = {
+    info_state: false,
     lat: 0,
     lng: 0,
     geo_name: "",
@@ -175,6 +174,7 @@ function Home() {
         });
       //ANCHOR build a object accepted by Marker in Home.js
       change_geo({
+        info_state: true,
         lat: names[0],
         lng: names[1],
         geo_name: name_query,
@@ -210,7 +210,7 @@ function Home() {
       />
       <Map geo={geo}></Map>
       <Info
-        info_state={true}
+        info_state={geo.info_state}
         info_name={geo.geo_name}
         type={geo.type_name}
         review={geo.review_points}
