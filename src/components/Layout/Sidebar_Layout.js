@@ -5,6 +5,8 @@ import Homebutton from "./Homebutton_Layout";
 import Dashboardbutton from "./Dashboardbutton_Layout";
 import Aboutbutton from "./Aboutbutton_Layout";
 
+import icon from "../../media/icon.png";
+
 const Title = React.memo((props) => {
   console.log("Title: " + props);
 
@@ -13,6 +15,12 @@ const Title = React.memo((props) => {
       className="inline-flex items-center p-2 mr-4 
       text-gray-700 dark:text-white"
     >
+      <img
+        src={icon}
+        className="relative rounded-lg p-4 h-20 w-20"
+        alt=""
+        loading="lazy"
+      ></img>
       <Link to="/" className="text-xl font-bold uppercase tracking-wide">
         Asian Food in Berlin
       </Link>

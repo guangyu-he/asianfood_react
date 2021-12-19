@@ -3,8 +3,8 @@
   "name": "Asianfood in Berlin",
   "icons": [
     {
-      "src": "icon.jpg",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "src": "icon.png",
+      "sizes": "512x512 64x64 32x32 24x24 16x16",
       "type": "image/png"
     }
   ],
