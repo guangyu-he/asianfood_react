@@ -6,26 +6,46 @@ import Dashboardbutton from "./Dashboardbutton_Layout";
 import Aboutbutton from "./Aboutbutton_Layout";
 
 import icon from "../../media/icon.png";
+import icon_dark from "../../media/icon_dark.png";
 
 const Title = React.memo((props) => {
   console.log("Title: " + props);
 
-  return (
-    <li
-      className="inline-flex items-center p-2 mr-4 
-      text-gray-700 dark:text-white"
-    >
-      <img
-        src={icon}
-        className="relative rounded-lg p-4 h-20 w-20"
-        alt=""
-        loading="lazy"
-      ></img>
-      <Link to="/" className="text-xl font-bold uppercase tracking-wide">
-        Asian Food in Berlin
-      </Link>
-    </li>
-  );
+  if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    return (
+      <li
+        className="inline-flex items-center p-2 mr-4 
+        text-gray-700 dark:text-white"
+      >
+        <img
+          src={icon_dark}
+          className="relative rounded-lg p-4 h-20 w-20"
+          alt=""
+          loading="lazy"
+        ></img>
+        <Link to="/" className="text-xl font-bold uppercase tracking-wide">
+          Asian Food in Berlin
+        </Link>
+      </li>
+    );
+  } else {
+    return (
+      <li
+        className="inline-flex items-center p-2 mr-4 
+        text-gray-700 dark:text-white"
+      >
+        <img
+          src={icon}
+          className="relative rounded-lg p-4 h-20 w-20"
+          alt=""
+          loading="lazy"
+        ></img>
+        <Link to="/" className="text-xl font-bold uppercase tracking-wide">
+          Asian Food in Berlin
+        </Link>
+      </li>
+    );
+  }
 });
 
 const Sidebar = (props) => {
