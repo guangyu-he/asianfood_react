@@ -5,6 +5,8 @@ import { faStar as faStar_solid } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStar_regular } from "@fortawesome/free-regular-svg-icons";
 
 const Info = (props) => {
+  console.log("Info: " + props);
+  
   const review_points_display = (review) => {
     var doms = [];
     for (let i = 0; i < review; i++) {
@@ -22,7 +24,6 @@ const Info = (props) => {
   return (
     <div
       className={`
-      ${props.info_state ? "" : "hidden"} 
       fixed z-30 
       bg-white dark:bg-gray-900 
       rounded-lg shadow-lg
@@ -44,7 +45,10 @@ const Info = (props) => {
             href={`https://maps.google.co.in/maps?q=${props.info_name}`}
             target="_blank"
             rel="noreferrer"
-            className="text-purple-400 antialiased text-1xl items-end hover:bg-cyan-600"
+            className={`
+            ${
+              props.info_state ? "" : "hidden"
+            } text-purple-400 antialiased text-1xl items-end hover:bg-cyan-600`}
           >
             <span className="text-blue-600 underline underline-offset-4">
               Open{" "}

@@ -1,20 +1,22 @@
 import React from "react";
 
-const Searchbar = (props) => {
+const SearchbarInput = React.memo((props) => {
   return (
-    <div className="
-    fixed z-10
-    inset-x-4 top-2 h-12 
-    rounded-lg shadow-lg 
-    bg-white dark:bg-gray-900
-    overflow-hidden">
+    <div
+      className="
+      fixed z-10
+      inset-x-4 top-2 h-12 
+      rounded-lg shadow-lg 
+      bg-white dark:bg-gray-900
+      overflow-hidden"
+    >
       <input
         className={`left-12 absolute peer h-full w-full outline-none text-sm text-gray-700 dark:bg-gray-900 dark:text-white pr-2 text-2xl`}
         type="text"
         id="search"
         ref={props.searchInput}
         placeholder={"Search something..."}
-        onClick={props.handelClick_input}
+        onClick={() => props.handelClick_input(false)}
         onChange={props.handleInputChange}
       />
       <button className="right-0 absolute grid place-items-center h-full w-12 text-gray-300">
@@ -35,6 +37,6 @@ const Searchbar = (props) => {
       </button>
     </div>
   );
-};
+});
 
-export default React.memo(Searchbar);
+export default SearchbarInput;

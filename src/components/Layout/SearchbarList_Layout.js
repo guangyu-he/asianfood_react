@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faStar_solid } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStar_regular } from "@fortawesome/free-regular-svg-icons";
 
-const Itemlist = (props) => {
+const SearchBarList = React.memo((props) => {
   const review_points_display = (review) => {
     var doms = [];
     for (let i = 0; i < review; i++) {
       doms.push(
-        <FontAwesomeIcon key={"faStar_solid" + i} icon={faStar_solid}/>
+        <FontAwesomeIcon key={"faStar_solid" + i} icon={faStar_solid} />
       );
     }
     for (let j = 0; j < 5 - review; j++) {
@@ -50,6 +50,6 @@ const Itemlist = (props) => {
       </div>
     </div>
   );
-};
+});
 
-export default React.memo(Itemlist);
+export default SearchBarList;
