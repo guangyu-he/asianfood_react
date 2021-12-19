@@ -1,6 +1,11 @@
 import React from "react";
 
 const SearchbarInput = React.memo((props) => {
+  let input_display = true;
+  if (window.location.pathname === "/About") {
+    input_display = false;
+  }
+
   return (
     <div
       className="
@@ -11,7 +16,9 @@ const SearchbarInput = React.memo((props) => {
       overflow-hidden"
     >
       <input
-        className={`left-12 absolute peer h-full w-full outline-none text-sm text-gray-700 dark:bg-gray-900 dark:text-white pr-2 text-2xl`}
+        className={`${
+          input_display ? "" : "hidden"
+        } left-12 absolute peer h-full w-full outline-none text-sm text-gray-700 dark:bg-gray-900 dark:text-white pr-2 text-2xl`}
         type="text"
         id="search"
         ref={props.searchInput}
