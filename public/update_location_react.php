@@ -9,7 +9,7 @@ $dbhost = 'localhost';  // mysql服务器主机地址
 $dbuser = 'test';            // mysql用户名
 //$dbpass = '0';          // mysql用户名密码
 $dbname = 'my_db';          // mysql用户名密码
-$conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+$conn_inset = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 
 // 检测连接
 if (!$conn_inset) {
