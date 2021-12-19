@@ -27,7 +27,7 @@ const About = () => {
               <div className="flex flex-col w-full">
                 <div className="flex flex-row justify-between">
                   <p className="relative text-xl overflow-hidden dark:text-white">
-                    Guangyu He
+                    Guangyu
                   </p>
                   <button className="text-gray-500 text-xl">
                     <span className="fa-solid fa-trash"></span>
@@ -48,7 +48,7 @@ const About = () => {
               <div className="flex flex-col w-full">
                 <div className="flex flex-row justify-between">
                   <p className="relative text-xl overflow-hidden dark:text-white">
-                    Sisi Huang
+                    Sisi
                   </p>
                   <button className="text-gray-500 text-xl">
                     <span className="fa-solid fa-trash"></span>
