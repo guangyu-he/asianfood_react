@@ -90,14 +90,16 @@ const Sidebar = (props) => {
           siderbar_item_selected={siderbar_item_selected}
           change_sidebar_item_selected={change_sidebar_item_selected}
         ></Homebutton>
-        <Dashboardbutton
-          siderbar_item_selected={siderbar_item_selected}
-          change_sidebar_item_selected={change_sidebar_item_selected}
-        ></Dashboardbutton>
+
         <Aboutbutton
           siderbar_item_selected={siderbar_item_selected}
           change_sidebar_item_selected={change_sidebar_item_selected}
         ></Aboutbutton>
+
+        <Dashboardbutton
+          siderbar_item_selected={siderbar_item_selected}
+          change_sidebar_item_selected={change_sidebar_item_selected}
+        ></Dashboardbutton>
       </nav>
     </div>
   );

@@ -25,7 +25,7 @@ const Dashboardbutton = React.memo((props) => {
       `}
         onClick={() => props.change_sidebar_item_selected("dashboard")}
       >
-        <span className="mx-4 font-medium dark:text-white">Dashboard</span>
+        <span className="mx-4 font-medium dark:text-white">Admin</span>
       </Link>
   );
 });
