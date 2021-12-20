@@ -1,5 +1,5 @@
 <?php
-$handle = fopen('./dbpass.txt', 'r');
+$handle = fopen('../dbpass.txt', 'r');
 while (!feof($handle)) {
   $dbpass = fgets($handle, 1024);
 }
