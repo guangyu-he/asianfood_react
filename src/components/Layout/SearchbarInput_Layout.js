@@ -23,7 +23,7 @@ const SearchbarInput = React.memo((props) => {
         id="search"
         ref={props.searchInput}
         placeholder={"Search something..."}
-        onClick={() => props.handelClick_input(false)}
+        onClick={() => props.handleClick_input(false)}
         onChange={props.handleInputChange}
       />
       <button className="right-0 absolute grid place-items-center h-full w-12 text-gray-300">

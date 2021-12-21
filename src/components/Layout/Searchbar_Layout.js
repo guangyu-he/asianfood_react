@@ -20,6 +20,10 @@ const API_URL_NAME_OFTYPE =
 const API_URL_NAME_ANDTYPE =
   "https://asianfood.heguangyu.net/return_location_name_andtype_react.php";
 
+const type_input_text1 =
+  "type your appetite from Chinese/Japaneses/Korean/Vietnamese";
+const type_input_text2 = "or the name of your interested restaurant";
+
 const Searchbar = React.memo((props) => {
   //ANCHOR create ref for searchInput
   const searchInput = useRef();
@@ -69,7 +73,8 @@ const Searchbar = React.memo((props) => {
       change_listitem(names);
     } else if (!query) {
       //ANCHOR if nothing there, close the list view
-      change_listview_state(false);
+      //change_listview_state(false);
+      change_listitem([type_input_text1, type_input_text2]);
     }
   };
   //!SECTION
@@ -97,6 +102,11 @@ const Searchbar = React.memo((props) => {
   const navigate = useNavigate();
 
   const handelClick_item = async (query) => {
+    if (query === type_input_text1 || query === type_input_text2) {
+      change_listview_state(false);
+      return false;
+    }
+
     //ANCHOR initial a result container
     let results = [],
       names = "",
@@ -177,14 +187,20 @@ const Searchbar = React.memo((props) => {
       //ANCHOR clean searchbar input
       searchInput.current.value = "";
     } else if (!query) {
+      change_listitem([type_input_text1, type_input_text2]);
     }
   };
   //!SECTION
 
+  const handleClick_input = (event) => {
+    change_listview_state(true);
+    change_listitem([type_input_text1, type_input_text2]);
+  };
+
   return (
     <Fragment>
       <SearchbarInput
-        handelClick_input={props.handelClick_input}
+        handleClick_input={handleClick_input}
         searchInput={searchInput}
         handleInputChange={handleInputChange}
       ></SearchbarInput>

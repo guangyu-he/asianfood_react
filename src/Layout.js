@@ -22,7 +22,7 @@ const Layout = React.memo((props) => {
 
   return (
     <Fragment>
-      <Searchbar handelClick_input={change_sidebar_state}></Searchbar>
+      <Searchbar></Searchbar>
       <Sidebar
         sidebar_state={sidebar_state}
         change_sidebar_state={change_sidebar_state}
