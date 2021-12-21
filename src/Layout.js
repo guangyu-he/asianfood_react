@@ -8,7 +8,7 @@ import Searchbar from "./components/Layout/Searchbar_Layout";
 const Layout = React.memo((props) => {
   console.log("Layout: " + props);
   //SECTION control sidebar component state
-  const [sidebar_state, set_sidebar_state] = useState(true);
+  const [sidebar_state, set_sidebar_state] = useState(false);
   function change_sidebar_state(props) {
     setTimeout(() => {
       if (props === false) {
