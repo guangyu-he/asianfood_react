@@ -52,6 +52,7 @@ const SearchbarInput = React.memo((props) => {
         placeholder={"Search something..."}
         onClick={() => props.handleClick_input(false)}
         onChange={props.handleInputChange}
+        onKeyDown={(e) => props.enterkeydown(e)}
       />
       <button className="right-0 absolute grid place-items-center h-full w-12 text-gray-300">
         {searchbaricon()}

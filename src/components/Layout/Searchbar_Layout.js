@@ -192,9 +192,17 @@ const Searchbar = React.memo((props) => {
   };
   //!SECTION
 
+  //ANCHOR type input to show instructions
   const handleClick_input = (event) => {
     change_listview_state(true);
     change_listitem([type_input_text1, type_input_text2]);
+  };
+
+  const enterkeydown = (e) => {
+    if (e.keyCode === 13) {
+      handelClick_item(listitem[0]);
+      searchInput.current.value = "";
+    }
   };
 
   return (
@@ -203,6 +211,7 @@ const Searchbar = React.memo((props) => {
         handleClick_input={handleClick_input}
         searchInput={searchInput}
         handleInputChange={handleInputChange}
+        enterkeydown={enterkeydown}
       ></SearchbarInput>
       <SearchBarList
         listview_state={listview_state}
