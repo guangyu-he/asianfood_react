@@ -24,6 +24,11 @@ const type_input_text1 =
   "type your appetite from Chinese/Japaneses/Korean/Vietnamese";
 const type_input_text2 = "or the name of your interested restaurant";
 
+const chinese_input = "Chinese Restaurants..."
+const japanese_input = "Japanese Restaurants..."
+const korean_input = "Korean Restaurants..."
+const vietnamese_input = "Vietnamese Restaurants..."
+
 const Searchbar = React.memo((props) => {
   //ANCHOR create ref for searchInput
   const searchInput = useRef();
@@ -47,13 +52,13 @@ const Searchbar = React.memo((props) => {
       //ANCHOR show option for searching by type
       let names = [];
       if (kor_name_list.indexOf(query) >= 0) {
-        names = [...names, "Korean Restaurants..."];
+        names = [...names, korean_input];
       } else if (chi_name_list.indexOf(query) >= 0) {
-        names = [...names, "Chinese Restaurants..."];
+        names = [...names, chinese_input];
       } else if (jap_name_list.indexOf(query) >= 0) {
-        names = [...names, "Japanese Restaurants..."];
+        names = [...names, japanese_input];
       } else if (vie_name_list.indexOf(query) >= 0) {
-        names = [...names, "Vietnamese Restaurants..."];
+        names = [...names, vietnamese_input];
       }
 
       //ANCHOR require data from php
@@ -74,7 +79,7 @@ const Searchbar = React.memo((props) => {
     } else if (!query) {
       //ANCHOR if nothing there, close the list view
       //change_listview_state(false);
-      change_listitem([type_input_text1, type_input_text2]);
+      change_listitem([chinese_input,japanese_input,korean_input,vietnamese_input, type_input_text2]);
     }
   };
   //!SECTION
@@ -118,13 +123,13 @@ const Searchbar = React.memo((props) => {
 
     //SECTION query data using type
     let type_query = "";
-    if (query === "Korean Restaurants...") {
+    if (query === korean_input) {
       type_query = "ko";
-    } else if (query === "Chinese Restaurants...") {
+    } else if (query === chinese_input) {
       type_query = "ch";
-    } else if (query === "Japanese Restaurants...") {
+    } else if (query === japanese_input) {
       type_query = "ja";
-    } else if (query === "Vietnamese Restaurants...") {
+    } else if (query === vietnamese_input) {
       type_query = "vi";
     } else {
     }
@@ -187,7 +192,7 @@ const Searchbar = React.memo((props) => {
       //ANCHOR clean searchbar input
       searchInput.current.value = "";
     } else if (!query) {
-      change_listitem([type_input_text1, type_input_text2]);
+      change_listitem([chinese_input,japanese_input,korean_input,vietnamese_input, type_input_text2]);
     }
   };
   //!SECTION
@@ -195,7 +200,7 @@ const Searchbar = React.memo((props) => {
   //ANCHOR type input to show instructions
   const handleClick_input = (event) => {
     change_listview_state(true);
-    change_listitem([type_input_text1, type_input_text2]);
+    change_listitem([chinese_input,japanese_input,korean_input,vietnamese_input, type_input_text2]);
   };
 
   const enterkeydown = (e) => {
