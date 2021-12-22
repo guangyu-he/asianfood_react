@@ -24,10 +24,10 @@ const type_input_text1 =
   "type your appetite from Chinese/Japaneses/Korean/Vietnamese";
 const type_input_text2 = "or the name of your interested restaurant";
 
-const chinese_input = "Chinese Restaurants..."
-const japanese_input = "Japanese Restaurants..."
-const korean_input = "Korean Restaurants..."
-const vietnamese_input = "Vietnamese Restaurants..."
+const chinese_input = "Chinese Restaurants...";
+const japanese_input = "Japanese Restaurants...";
+const korean_input = "Korean Restaurants...";
+const vietnamese_input = "Vietnamese Restaurants...";
 
 const Searchbar = React.memo((props) => {
   //ANCHOR create ref for searchInput
@@ -79,7 +79,13 @@ const Searchbar = React.memo((props) => {
     } else if (!query) {
       //ANCHOR if nothing there, close the list view
       //change_listview_state(false);
-      change_listitem([chinese_input,japanese_input,korean_input,vietnamese_input, type_input_text2]);
+      change_listitem([
+        chinese_input,
+        japanese_input,
+        korean_input,
+        vietnamese_input,
+        type_input_text2,
+      ]);
     }
   };
   //!SECTION
@@ -107,7 +113,11 @@ const Searchbar = React.memo((props) => {
   const navigate = useNavigate();
 
   const handelClick_item = async (query) => {
-    if (query === type_input_text1 || query === type_input_text2) {
+    if (
+      query === type_input_text1 ||
+      query === type_input_text2 ||
+      query === ""
+    ) {
       change_listview_state(false);
       return false;
     }
@@ -192,7 +202,13 @@ const Searchbar = React.memo((props) => {
       //ANCHOR clean searchbar input
       searchInput.current.value = "";
     } else if (!query) {
-      change_listitem([chinese_input,japanese_input,korean_input,vietnamese_input, type_input_text2]);
+      change_listitem([
+        chinese_input,
+        japanese_input,
+        korean_input,
+        vietnamese_input,
+        type_input_text2,
+      ]);
     }
   };
   //!SECTION
@@ -200,7 +216,13 @@ const Searchbar = React.memo((props) => {
   //ANCHOR type input to show instructions
   const handleClick_input = (event) => {
     change_listview_state(true);
-    change_listitem([chinese_input,japanese_input,korean_input,vietnamese_input, type_input_text2]);
+    change_listitem([
+      chinese_input,
+      japanese_input,
+      korean_input,
+      vietnamese_input,
+      type_input_text2,
+    ]);
   };
 
   const enterkeydown = (e) => {

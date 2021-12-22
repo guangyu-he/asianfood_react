@@ -4,7 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as faStar_solid } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStar_regular } from "@fortawesome/free-regular-svg-icons";
 
+import SearchbarListClose from "./SearchbarListClose_Layout";
+
 const SearchBarList = React.memo((props) => {
+  const handelClick_button = props.handelClick_item.bind(this);
+
   const review_points_display = (review) => {
     var doms = [];
     for (let i = 0; i < review; i++) {
@@ -27,8 +31,8 @@ const SearchBarList = React.memo((props) => {
        min-w-full top-16 `}
     >
       <div className="flex justify-center">
-        <div className="bg-white shadow-xl dark:bg-gray-900 rounded-lg w-1/2">
-          <ul className="divide-y divide-gray-300">
+        <div className="bg-white shadow-xl h-auto dark:bg-gray-900 rounded-lg inset-x-4 lg:w-1/2">
+          <ul className="divide-y overflow-y-scroll h-72 divide-gray-300">
             {props.listitem.map((item, index) => {
               return (
                 <li
@@ -48,6 +52,9 @@ const SearchBarList = React.memo((props) => {
           </ul>
         </div>
       </div>
+      <SearchbarListClose
+        handelClick_button={handelClick_button}
+      ></SearchbarListClose>
     </div>
   );
 });

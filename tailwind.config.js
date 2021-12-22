@@ -3,7 +3,7 @@ module.exports = {
   darkMode: "media", // or 'media' or 'class'
   theme: {
     extend: {
-      height: { '9/10': "90%" },
+      height: { "9/10": "90%" },
     },
   },
   variants: {
