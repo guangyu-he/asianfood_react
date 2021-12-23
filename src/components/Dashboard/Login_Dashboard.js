@@ -3,11 +3,9 @@ import React, { Fragment } from "react";
 const Login = (props) => {
   return (
     <Fragment>
-      <div className="absolute w-full h-fit inset-y-1/3 lg:w-1/3 lg:inset-x-1/3">
+      <div className="absolute w-full h-fit p-4 inset-y-1/3 lg:w-1/3 lg:inset-x-1/3">
         <div>
-          <label className="sr-only">
-            User Name
-          </label>
+          <label className="sr-only">User Name</label>
           <input
             type="text"
             className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
@@ -25,6 +23,7 @@ const Login = (props) => {
             ref={props.passInput}
           ></input>
         </div>
+        <div className="py-2"></div>
         <button
           type="submit"
           onClick={props.handelClick_login}
