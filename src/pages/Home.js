@@ -5,7 +5,7 @@ import Map from "../components/Home/Map_Home";
 import Info from "../components/Home/Info_Home";
 
 function Home(props) {
-  console.log("Home: " + props);
+  //console.log("Home: " + props);
 
   //ANCHOR receive props using location
   const location = useLocation();

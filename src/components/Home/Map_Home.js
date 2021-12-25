@@ -33,7 +33,7 @@ const Golocation = (props) => {
 };
 
 const Map = (props) => {
-  console.log("Map: " + props);
+  //console.log("Map: " + props);
 
   return (
     <MapContainer

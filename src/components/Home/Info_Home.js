@@ -5,7 +5,7 @@ import { faStar as faStar_solid } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStar_regular } from "@fortawesome/free-regular-svg-icons";
 
 const Info = (props) => {
-  console.log("Info: " + props);
+  //console.log("Info: " + props);
   
   const review_points_display = (review) => {
     var doms = [];

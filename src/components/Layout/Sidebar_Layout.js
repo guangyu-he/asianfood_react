@@ -9,7 +9,7 @@ import icon from "../../media/icon.png";
 import icon_dark from "../../media/icon_dark.png";
 
 const Title = React.memo((props) => {
-  console.log("Title: " + props);
+  //console.log("Title: " + props);
 
   if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
     return (
