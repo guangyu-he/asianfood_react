@@ -28,7 +28,7 @@ const Info = (props) => {
       bg-white dark:bg-gray-900 
       rounded-lg shadow-lg
       bottom-6 inset-x-4 h-32 lg:left-1/4 lg:w-2/4
-      overflow-hidden
+      overflow-auto p-1
       `}
     >
       <div className="inline-flex">
