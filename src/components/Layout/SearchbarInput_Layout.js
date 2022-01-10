@@ -18,6 +18,7 @@ const SearchbarInput = React.memo((props) => {
           className="rounded-lg h-10 w-10"
           alt=""
           loading="lazy"
+          key="icon_dark"
         ></img>
       );
     } else {
@@ -27,6 +28,7 @@ const SearchbarInput = React.memo((props) => {
           className="rounded-lg h-10 w-10"
           alt=""
           loading="lazy"
+          key="icon"
         ></img>
       );
     }
@@ -47,7 +49,6 @@ const SearchbarInput = React.memo((props) => {
           input_display ? "" : "hidden"
         } left-12 absolute peer h-full w-full outline-none text-sm text-gray-700 dark:bg-gray-900 dark:text-white pr-2 text-2xl`}
         type="text"
-        key="searchinput"
         ref={props.searchInput}
         placeholder={"Search something..."}
         onClick={() => props.handleClick_input(false)}
