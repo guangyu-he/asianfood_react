@@ -28,7 +28,6 @@ const SearchbarListClose = React.memo((props) => {
   };
   return (
     <button
-      className="absolute right-6 lg:right-1/4"
       onClick={() => props.handelClick_button("")}
     >
       {closeicon()}

@@ -27,34 +27,34 @@ const SearchBarList = React.memo((props) => {
     <div
       className={`
       ${props.listview_state ? "" : "hidden"}
-       container z-50 absolute
-       min-w-full top-16 `}
+       z-50 absolute 
+       top-16 inset-x-4 lg:w-1/2 lg:inset-x-1/4`}
     >
-      <div className="flex justify-center">
-        <div className="bg-white shadow-xl h-auto dark:bg-gray-900 rounded-lg inset-x-4 lg:w-1/2">
-          <ul className="divide-y overflow-y-scroll h-72 divide-gray-300">
-            {props.listitem.map((item, index) => {
-              return (
-                <li
-                  className="
+      <div className="bg-white shadow-xl h-auto dark:bg-gray-900 rounded-lg">
+        <ul className="divide-y overflow-y-scroll h-72 divide-gray-300">
+          {props.listitem.map((item, index) => {
+            return (
+              <li
+                className="
                   p-4
                   hover:bg-gray-50 dark:hover:bg-gray-500 
                   dark:text-white 
                   cursor-pointer"
-                  key={item + index}
-                  onClick={() => props.handelClick_item(item)}
-                >
-                  {item.split(";")[0]} {"  "}
-                  {review_points_display(item.split(";")[1])}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+                key={item + index}
+                onClick={() => props.handelClick_item(item)}
+              >
+                {item.split(";")[0]} {"  "}
+                {review_points_display(item.split(";")[1])}
+              </li>
+            );
+          })}
+        </ul>
       </div>
-      <SearchbarListClose
-        handelClick_button={handelClick_button}
-      ></SearchbarListClose>
+      <div className="absolute right-0">
+        <SearchbarListClose
+          handelClick_button={handelClick_button}
+        ></SearchbarListClose>
+      </div>
     </div>
   );
 });
