@@ -21,7 +21,7 @@ mysqli_query($conn, "set names utf8");
 
 $lat = $_GET['lat'];
 $lng = $_GET['lng'];
-$range = 0.002;
+$range = 0.015;
 
 $lat_d = (float)$lat - $range;
 $lat_u = (float)$lat + $range;
