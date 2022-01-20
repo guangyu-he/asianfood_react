@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from "react";
+import React, { Fragment, useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -20,9 +20,13 @@ const API_URL_NAME_OFTYPE =
 const API_URL_NAME_ANDTYPE =
   "https://asianfood.heguangyu.net/return_location_name_andtype_react.php";
 
-const type_input_text1 =
-  "type your appetite from Chinese/Japaneses/Korean/Vietnamese";
+const API_URL_NAME_ANDTYPE_WITHLATLNG =
+  "https://asianfood.heguangyu.net/return_location_name_andtype_withlatlng_react.php";
+
+const type_input_text1 = "Check restaurants nearby";
 const type_input_text2 = "or the name of your interested restaurant";
+const type_input_text3 = "there is no restaurants in our database nearby";
+const type_input_text4 = "can not get your location, please try again";
 
 const chinese_input = "Chinese Restaurants...";
 const japanese_input = "Japanese Restaurants...";
@@ -84,6 +88,7 @@ const Searchbar = React.memo((props) => {
         japanese_input,
         korean_input,
         vietnamese_input,
+        type_input_text1,
         type_input_text2,
       ]);
     }
@@ -112,14 +117,34 @@ const Searchbar = React.memo((props) => {
   //ANCHOR using useNavigate to pass props
   const navigate = useNavigate();
 
+  //ANCHOR get user location
+  const [user_location, set_user_location] = useState({ lat: 0, lng: 0 });
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      if (position.coords === null) {
+        return false;
+      }
+      let user_location_obj = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+      set_user_location(user_location_obj);
+      console.log("Latitude is :", position.coords.latitude);
+      console.log("Longitude is :", position.coords.longitude);
+    });
+  }, []);
+
   const handelClick_item = async (query) => {
     if (
-      query === type_input_text1 ||
       query === type_input_text2 ||
-      query === ""
+      query === "" ||
+      query === type_input_text3
     ) {
       change_listview_state(false);
       return false;
+    } else if (query === type_input_text1) {
+      console.log(user_location);
+      //return false;
     }
 
     //ANCHOR initial a result container
@@ -141,9 +166,39 @@ const Searchbar = React.memo((props) => {
       type_query = "ja";
     } else if (query === vietnamese_input) {
       type_query = "vi";
+    } else if (query === type_input_text1) {
+      type_query = "geo";
     } else {
     }
     if (type_query === "") {
+    } else if (type_query === "geo") {
+      /*console.log(
+        `${API_URL_NAME_ANDTYPE_WITHLATLNG}?lat=${user_location.lat}&lng=${user_location.lng}`
+      );*/
+      if (user_location.lat === 0 && user_location.lng === 0) {
+        change_listitem([type_input_text4]);
+        return false;
+      }
+      await axios
+        .get(
+          `${API_URL_NAME_ANDTYPE_WITHLATLNG}?lat=${user_location.lat}&lng=${user_location.lng}`
+        )
+        .then(({ data }) => {
+          results = data.split(",");
+        });
+      for (let i = 0; i < results.length - 1; i++) {
+        if (results[i] === undefined) {
+        } else {
+          names = [...names, results[i]];
+        }
+      }
+
+      if (names === "") {
+        change_listitem([type_input_text3]);
+      } else {
+        change_listitem(names);
+      }
+      return false;
     } else {
       await axios
         .get(`${API_URL_NAME_OFTYPE}?n=${type_query}`)
@@ -207,6 +262,7 @@ const Searchbar = React.memo((props) => {
         japanese_input,
         korean_input,
         vietnamese_input,
+        type_input_text1,
         type_input_text2,
       ]);
     }
@@ -221,6 +277,7 @@ const Searchbar = React.memo((props) => {
       japanese_input,
       korean_input,
       vietnamese_input,
+      type_input_text1,
       type_input_text2,
     ]);
   };
