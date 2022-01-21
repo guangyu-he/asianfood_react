@@ -21,16 +21,16 @@ mysqli_query($conn, "set names utf8");
 
 $lat = $_GET['lat'];
 $lng = $_GET['lng'];
-$range = 0.015;
+$range = (double)0.02;
 
-$lat_d = (float)$lat - $range;
-$lat_u = (float)$lat + $range;
-$lng_d = (float)$lng - $range;
-$lng_u = (float)$lng + $range;
+$lat_d = (double)$lat - $range;
+$lat_u = (double)$lat + $range;
+$lng_d = (double)$lng - $range;
+$lng_u = (double)$lng + $range;
 
 //echo "$lat_d - $lat - $lat_u , $lng_d - $lng - $lng_u";
-
-$sql = "SELECT * FROM locations WHERE lat between '$lat_d' and '$lat_u' AND lng between '$lng_d' and '$lng_u'";
+$sql = "SELECT * FROM `locations` WHERE lat between $lat_d and $lat_u AND lng between $lng_d and $lng_u";
+//echo $sql;
 
 mysqli_select_db($conn, $dbname);
 $retval = mysqli_query($conn, $sql);
