@@ -38,7 +38,7 @@ $retval = mysqli_query($conn, $sql);
 if (mysqli_num_rows($retval) > 0) {
   // 输出数据
   while ($row = mysqli_fetch_assoc($retval)) {
-    echo "" . $row["name"] . ";" . $row["review"] . ",";
+    echo "" . $row["name"] . ";" . $row["review"] . ";" . $row["type"] . ",";
   }
 } else {
 }

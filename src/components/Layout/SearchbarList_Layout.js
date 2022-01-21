@@ -44,7 +44,8 @@ const SearchBarList = React.memo((props) => {
                 onClick={() => props.handelClick_item(item)}
               >
                 {item.split(";")[0]} {"  "}
-                {review_points_display(item.split(";")[1])}
+                {review_points_display(item.split(";")[1])}{"  "}
+                <i><small>{item.split(";")[2]}</small></i>
               </li>
             );
           })}
