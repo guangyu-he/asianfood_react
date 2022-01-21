@@ -23,8 +23,8 @@ const API_URL_NAME_ANDTYPE =
 const API_URL_NAME_ANDTYPE_WITHLATLNG =
   "https://asianfood.heguangyu.net/return_location_name_andtype_withlatlng_react.php";
 
-const type_input_text1 = "Check restaurants nearby";
-const type_input_text2 = "or the name of your interested restaurant";
+const type_input_text1 = "<b>Check restaurants nearby</b>";
+const type_input_text2 = "<i>or the name of your interested restaurant</i>";
 const type_input_text3 = "there is no restaurants in our database nearby";
 const type_input_text4 = "can not get your location, please try again";
 

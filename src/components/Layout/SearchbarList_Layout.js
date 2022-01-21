@@ -43,9 +43,16 @@ const SearchBarList = React.memo((props) => {
                 key={item + index}
                 onClick={() => props.handelClick_item(item)}
               >
-                {item.split(";")[0]} {"  "}
-                {review_points_display(item.split(";")[1])}{"  "}
-                <i><small>{item.split(";")[2]}</small></i>
+                <span
+                  dangerouslySetInnerHTML={{ __html: item.split(";")[0] + " " }}
+                ></span>
+                <span>{review_points_display(item.split(";")[1])}</span>
+                {"  "}
+                <span>
+                  <i>
+                    <small>{item.split(";")[2]}</small>
+                  </i>
+                </span>
               </li>
             );
           })}
