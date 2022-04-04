@@ -6,7 +6,7 @@ import Sidebar from "./components/Layout/Sidebar_Layout";
 import Searchbar from "./components/Layout/Searchbar_Layout";
 
 const Layout = memo((props) => {
-  console.log("rendering Layout");
+  //console.log("rendering Layout");
 
   //SECTION control sidebar component state
   const [sidebar_state, set_sidebar_state] = useState(false);
