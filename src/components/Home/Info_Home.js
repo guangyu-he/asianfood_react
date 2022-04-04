@@ -68,7 +68,8 @@ const Info = (props) => {
         </div>
       </div>
       <div>
-        <div className="dark:text-white">{props.review_details}</div>
+        <div dangerouslySetInnerHTML={{__html: props.review_details}}></div> {/* allow html label working in review details */}
+        {/* <div className="dark:text-white">{props.review_details}</div> */}
       </div>
     </div>
   );

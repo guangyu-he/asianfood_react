@@ -23,7 +23,7 @@ function Home(props) {
     info_state = false;
     type = "";
     review = 5;
-    review_details = "Thanks for using! Designed by Guangyu and Sisi";
+    review_details = "Thanks for using! <br> Designed by Guangyu and Sisi.";
   } //!SECTION
   //SECTION distribute props
   else {
