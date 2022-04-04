@@ -1,46 +1,19 @@
-import React, { useState, Fragment, useCallback } from "react";
-import {
-  GoogleMap,
-  useJsApiLoader,
-  Marker,
-  InfoBox,
-} from "@react-google-maps/api";
+import React, { Fragment } from "react";
 import { useLocation } from "react-router-dom";
 
+import Map from "../components/Home/Map_Home";
 import Info from "../components/Home/Info_Home";
 
-const containerStyle = {
-  width: "100%",
-  height: "100vh",
-  position: "absolute",
-};
+function Home(props) {
+  //console.log("Home: " + props);
 
-function Home() {
-  let mapOptions = {
-    zoom: 13,
-    zoomControl: true,
-    scaleControl: false,
-    fullscreenControl: false,
-    mapTypeControl: false,
-    streetViewControl: false,
-    gestureHandling: "greedy",
-    maxZoom: 15 + 3,
-    mapId: "e04d39f76af137b0",
-  };
-
-  if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    console.log("dark mode on");
-    mapOptions.mapId = "da23336c10c105b2";
-  }
-
-  let marker_pos = "";
-  let info_name = "";
-  let info_state = false;
-  let type = "";
-  let review = 0;
-  let review_details = "";
-
+  //ANCHOR receive props using location
   const location = useLocation();
+
+  //ANCHOR initialize container variables
+  let marker_pos, info_name, info_state, type, review, review_details;
+
+  //SECTION initial variables if there is no props
   if (location.state === null) {
     marker_pos = {
       lat: 52.517674728732054,
@@ -49,9 +22,11 @@ function Home() {
     info_name = "Asian Food in Berlin";
     info_state = false;
     type = "";
-    review = 0;
-    review_details = "";
-  } else {
+    review = 5;
+    review_details = "Thanks for using! <br> Designed by Guangyu and Sisi.";
+  } //!SECTION
+  //SECTION distribute props
+  else {
     marker_pos = {
       lat: parseFloat(location.state.lat),
       lng: parseFloat(location.state.lng),
@@ -62,55 +37,16 @@ function Home() {
     review = parseInt(location.state.review_points);
     review_details = location.state.review_text;
   }
+  const geo = {
+    lat: marker_pos.lat,
+    lng: marker_pos.lng,
+    geo_name: info_name,
+  };
+  //!SECTION
 
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: "AIzaSyD7eBZcwtUqmgeuYkWPjDK8d0uvU3Q1WrE&language=en",
-  });
-
-  // eslint-disable-next-line
-  const [map, setMap] = useState(null);
-
-  const onLoad = useCallback(function callback(map) {
-    setMap(map);
-  }, []);
-
-  const onUnmount = useCallback(function callback(map) {
-    setMap(null);
-  }, []);
-
-  return isLoaded ? (
+  return (
     <Fragment>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        options={mapOptions}
-        center={marker_pos}
-        onLoad={() => onLoad}
-        onUnmount={() => onUnmount}
-      >
-        {/* Child components, such as markers, info windows, etc. */}
-        <Marker position={marker_pos} />
-        <InfoBox
-          position={marker_pos}
-          options={{ closeBoxURL: "", enableEventPropagation: true }}
-        >
-          <div
-          className="
-          p-2 w-24
-          shadow-lg rounded-lg
-          bg-white dark:bg-gray-500
-          "
-          style={{opacity: "0.8"}}
-          >
-            <div className="
-            text-base
-            dark:text-white 
-            ">
-              {info_name}
-            </div>
-          </div>
-        </InfoBox>
-      </GoogleMap>
+      <Map geo={geo}></Map>
       <Info
         info_state={info_state}
         info_name={info_name}
@@ -119,9 +55,7 @@ function Home() {
         review_details={review_details}
       ></Info>
     </Fragment>
-  ) : (
-    <></>
   );
 }
 
-export default Home;
+export default React.memo(Home);

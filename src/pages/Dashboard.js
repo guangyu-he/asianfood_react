@@ -232,8 +232,10 @@ const Dashboard = () => {
         className={`${login_display ? "hidden" : ""} fixed 
         w-full h-full dark:bg-gray-700`}
       >
-        <div className="absolute w-full inset-y-1/3
-        lg:w-1/2 lg:inset-x-1/4">
+        <div
+          className="absolute w-full inset-y-1/3
+        lg:w-1/2 lg:inset-x-1/4"
+        >
           <Name
             alert_name_input={alert_name_input}
             geo_name={geo_name}

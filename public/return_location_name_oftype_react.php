@@ -1,5 +1,5 @@
 <?php
-$handle = fopen('./dbpass.txt', 'r');
+$handle = fopen('../dbpass.txt', 'r');
 while (!feof($handle)) {
   $dbpass = fgets($handle, 1024);
 }
@@ -21,7 +21,7 @@ mysqli_query($conn, "set names utf8");
 
 $name = $_GET['n'];
 
-$sql = "SELECT * FROM locations WHERE type like '$name%' ";
+$sql = "SELECT * FROM locations WHERE type like '$name%' order by review desc";
 
 mysqli_select_db($conn, $dbname);
 $retval = mysqli_query($conn, $sql);

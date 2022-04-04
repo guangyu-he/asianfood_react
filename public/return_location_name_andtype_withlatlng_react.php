@@ -19,9 +19,18 @@ $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 // 设置编码，防止中文乱码
 mysqli_query($conn, "set names utf8");
 
-$name = $_GET['n'];
+$lat = $_GET['lat'];
+$lng = $_GET['lng'];
+$range = (double)0.02;
 
-$sql = "SELECT * FROM locations WHERE name like '$name%' ";
+$lat_d = (double)$lat - $range;
+$lat_u = (double)$lat + $range;
+$lng_d = (double)$lng - $range;
+$lng_u = (double)$lng + $range;
+
+//echo "$lat_d - $lat - $lat_u , $lng_d - $lng - $lng_u";
+$sql = "SELECT * FROM `locations` WHERE lat between $lat_d and $lat_u AND lng between $lng_d and $lng_u";
+//echo $sql;
 
 mysqli_select_db($conn, $dbname);
 $retval = mysqli_query($conn, $sql);
@@ -29,7 +38,7 @@ $retval = mysqli_query($conn, $sql);
 if (mysqli_num_rows($retval) > 0) {
   // 输出数据
   while ($row = mysqli_fetch_assoc($retval)) {
-    echo "" . $row["name"] . ";" . $row["review"] . ",";
+    echo "" . $row["name"] . ";" . $row["review"] . ";" . $row["type"] . ",";
   }
 } else {
 }

@@ -5,6 +5,8 @@ import { faStar as faStar_solid } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStar_regular } from "@fortawesome/free-regular-svg-icons";
 
 const Info = (props) => {
+  //console.log("Info: " + props);
+  
   const review_points_display = (review) => {
     var doms = [];
     for (let i = 0; i < review; i++) {
@@ -22,12 +24,11 @@ const Info = (props) => {
   return (
     <div
       className={`
-      ${props.info_state ? "" : "hidden"} 
       fixed z-30 
       bg-white dark:bg-gray-900 
       rounded-lg shadow-lg
       bottom-6 inset-x-4 h-32 lg:left-1/4 lg:w-2/4
-      overflow-hidden
+      overflow-auto p-1
       `}
     >
       <div className="inline-flex">
@@ -44,7 +45,10 @@ const Info = (props) => {
             href={`https://maps.google.co.in/maps?q=${props.info_name}`}
             target="_blank"
             rel="noreferrer"
-            className="text-purple-400 antialiased text-1xl items-end hover:bg-cyan-600"
+            className={`
+            ${
+              props.info_state ? "" : "hidden"
+            } text-purple-400 antialiased text-1xl items-end hover:bg-cyan-600`}
           >
             <span className="text-blue-600 underline underline-offset-4">
               Open{" "}
@@ -64,7 +68,8 @@ const Info = (props) => {
         </div>
       </div>
       <div>
-        <div className="dark:text-white">{props.review_details}</div>
+        <div dangerouslySetInnerHTML={{__html: props.review_details}}></div> {/* allow html label working in review details */}
+        {/* <div className="dark:text-white">{props.review_details}</div> */}
       </div>
     </div>
   );

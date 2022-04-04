@@ -1,25 +1,15 @@
 {
   "short_name": "Asianfood in Berlin",
-  "name": "Create React App Sample",
+  "name": "Asianfood in Berlin",
   "icons": [
     {
       "src": "icon.png",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "512x512 64x64 32x32 24x24 16x16",
       "type": "image/png"
-    },
-    {
-      "src": "icon.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "icon.png",
-      "type": "image/png",
-      "sizes": "512x512"
     }
   ],
   "start_url": ".",
-  "display": "standalone",
+  "display": "fullscreen",
   "theme_color": "#000000",
   "background_color": "#ffffff"
 }
