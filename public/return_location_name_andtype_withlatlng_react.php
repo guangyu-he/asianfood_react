@@ -23,6 +23,9 @@ $lat = $_GET['lat'];
 $lng = $_GET['lng'];
 $range = (double)0.02;
 
+$lat_value = floatval( $lat );
+$lng_value = floatval( $lng );
+
 $lat_d = (double)$lat - $range;
 $lat_u = (double)$lat + $range;
 $lng_d = (double)$lng - $range;
@@ -38,7 +41,11 @@ $retval = mysqli_query($conn, $sql);
 if (mysqli_num_rows($retval) > 0) {
   // 输出数据
   while ($row = mysqli_fetch_assoc($retval)) {
-    echo "" . $row["name"] . ";" . $row["review"] . ";" . $row["type"] . ",";
+    $lat_value_row = (floatval( $row["lat"] ) - $lat_value) * 110.574;
+    $lng_value_row = (floatval( $row["lng"] ) - $lng_value) * 111.320 * cos( $lat_value * 0.017453 );
+    $dis = round(sqrt($lat_value_row * $lat_value_row + $lng_value_row * $lng_value_row),2);
+
+    echo "" . $row["name"] . ";" . $row["review"] . ";" . $row["type"] . ";" . $dis . ",";
   }
 } else {
 }

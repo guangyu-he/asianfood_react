@@ -53,6 +53,10 @@ const SearchBarList = React.memo((props) => {
                     <small>{item.split(";")[2]}</small>
                   </i>
                 </span>
+                {"  "}
+                <span>
+                    <small>{`${item.split(";")[3] === undefined ? "" : item.split(";")[3]+'km'}`}</small>
+                </span>
               </li>
             );
           })}
