@@ -43,7 +43,7 @@ if (mysqli_num_rows($retval) > 0) {
   while ($row = mysqli_fetch_assoc($retval)) {
     $lat_value_row = (floatval( $row["lat"] ) - $lat_value) * 110.574;
     $lng_value_row = (floatval( $row["lng"] ) - $lng_value) * 111.320 * cos( $lat_value * 0.017453 );
-    $dis = round(sqrt($lat_value_row * $lat_value_row + $lng_value_row * $lng_value_row),2);
+    $dis = round(sqrt($lat_value_row * $lat_value_row + $lng_value_row * $lng_value_row),1);
 
     echo "" . $row["name"] . ";" . $row["review"] . ";" . $row["type"] . ";" . $dis . ",";
   }

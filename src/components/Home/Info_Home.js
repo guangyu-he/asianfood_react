@@ -6,7 +6,7 @@ import { faStar as faStar_regular } from "@fortawesome/free-regular-svg-icons";
 
 const Info = (props) => {
   //console.log("Info: " + props);
-  
+ 
   const review_points_display = (review) => {
     var doms = [];
     for (let i = 0; i < review; i++) {
@@ -63,12 +63,15 @@ const Info = (props) => {
         </div>
       </div>
       <div>
+        <small className={`${props.distance === undefined ? "hidden" : "inline-flex dark:text-white"}`}>{`${props.distance === undefined ? "" : props.distance+'km'}`}</small>
+      </div>
+      <div>
         <div className="inline-flex dark:text-white">
           {review_points_display(props.review)}
         </div>
       </div>
       <div>
-        <div dangerouslySetInnerHTML={{__html: props.review_details}}></div> {/* allow html label working in review details */}
+        <div className="dark:text-white" dangerouslySetInnerHTML={{__html: props.review_details}}></div> {/* allow html label working in review details */}
         {/* <div className="dark:text-white">{props.review_details}</div> */}
       </div>
     </div>

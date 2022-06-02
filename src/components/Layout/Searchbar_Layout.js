@@ -251,6 +251,8 @@ const Searchbar = React.memo((props) => {
           type_name: type,
           review_points: query.split(";")[1],
           review_text: review_details,
+          usr_lat: user_location.lat,
+          usr_lng: user_location.lng,
         },
       });
 
