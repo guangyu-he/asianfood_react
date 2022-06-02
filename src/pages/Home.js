@@ -1,30 +1,71 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 
 import Map from "../components/Home/Map_Home";
 import Info from "../components/Home/Info_Home";
 
-// 方法定义 lat,lng 
-function GetDistance( lat1,  lng1,  lat2,  lng2){
-  var radLat1 = lat1*Math.PI / 180.0;
-  var radLat2 = lat2*Math.PI / 180.0;
+// 方法定义 lat,lng
+function GetDistance(lat1, lng1, lat2, lng2) {
+  var radLat1 = (lat1 * Math.PI) / 180.0;
+  var radLat2 = (lat2 * Math.PI) / 180.0;
   var a = radLat1 - radLat2;
-  var  b = lng1*Math.PI / 180.0 - lng2*Math.PI / 180.0;
-  var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) +
-  Math.cos(radLat1)*Math.cos(radLat2)*Math.pow(Math.sin(b/2),2)));
-  s = s *6378.137 ;// EARTH_RADIUS;
+  var b = (lng1 * Math.PI) / 180.0 - (lng2 * Math.PI) / 180.0;
+  var s =
+    2 *
+    Math.asin(
+      Math.sqrt(
+        Math.pow(Math.sin(a / 2), 2) +
+          Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)
+      )
+    );
+  s = s * 6378.137; // EARTH_RADIUS;
   s = Math.round(s * 10000) / 10000;
   return s;
 }
 
+function useWinSize() {
+  const [size, setSize] = useState({
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight,
+  });
+
+  const onResize = useCallback(() => {
+    setSize({
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
+    });
+  }, []);
+  useEffect(() => {
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    };
+    // eslint-disable-next-line
+  }, []);
+
+  return size;
+}
+
 function Home(props) {
   //console.log("Home: " + props);
+  const size = useWinSize(); //获取屏幕大小
+  //console.log(size.height  or size.width);
 
   //ANCHOR receive props using location
   const location = useLocation();
 
   //ANCHOR initialize container variables
-  let marker_pos, info_name, info_state, type, distance, review, review_details;
+  let marker_pos,
+    info_name,
+    info_state,
+    type,
+    distance,
+    review,
+    review_details,
+    info_display = true;
+  if (size.height <= 600) {
+    info_display = false;
+  }
 
   //SECTION initial variables if there is no props
   if (location.state === null) {
@@ -52,8 +93,17 @@ function Home(props) {
     distance_lng = (parseFloat(location.state.usr_lng) * Math.cos( parseFloat(location.state.usr_lat) * 0.017453) - parseFloat(location.state.lng) * Math.cos( parseFloat(location.state.lat) * 0.017453))  * 111.320; 
     distance = Math.sqrt(distance_lat ** 2 + distance_lng ** 2)/10; */
 
-    distance = GetDistance(location.state.usr_lat,location.state.usr_lng,location.state.lat,location.state.lng);
-    distance = distance.toFixed(2);
+    if (location.state.usr_lat === 0) {
+      distance = undefined;
+    } else {
+      distance = GetDistance(
+        location.state.usr_lat,
+        location.state.usr_lng,
+        location.state.lat,
+        location.state.lng
+      );
+      distance = distance.toFixed(2);
+    }
 
     review = parseInt(location.state.review_points);
     review_details = location.state.review_text;
@@ -69,6 +119,7 @@ function Home(props) {
     <Fragment>
       <Map geo={geo}></Map>
       <Info
+        info_display={info_display}
         info_state={info_state}
         info_name={info_name}
         type={type}

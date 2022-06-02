@@ -38,7 +38,7 @@ const SearchbarInput = React.memo((props) => {
   return (
     <div
       className="
-      fixed z-10
+      absolute z-10
       inset-x-4 top-2 h-12 
       rounded-lg shadow-lg 
       bg-white dark:bg-gray-900
@@ -47,7 +47,7 @@ const SearchbarInput = React.memo((props) => {
       <input
         className={`${
           input_display ? "" : "hidden"
-        } left-12 absolute peer h-full w-full outline-none text-sm text-gray-700 dark:bg-gray-900 dark:text-white pr-2 text-2xl`}
+        } left-16 fixed peer h-12 inset-x-6 outline-none text-sm text-gray-700 dark:bg-gray-900 dark:text-white pr-2 text-2xl`}
         type="text"
         ref={props.searchInput}
         placeholder={"Search something..."}

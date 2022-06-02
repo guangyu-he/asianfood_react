@@ -6,7 +6,7 @@ import { faStar as faStar_regular } from "@fortawesome/free-regular-svg-icons";
 
 const Info = (props) => {
   //console.log("Info: " + props);
- 
+
   const review_points_display = (review) => {
     var doms = [];
     for (let i = 0; i < review; i++) {
@@ -23,13 +23,11 @@ const Info = (props) => {
   };
   return (
     <div
-      className={`
-      fixed z-30 
-      bg-white dark:bg-gray-900 
-      rounded-lg shadow-lg
-      bottom-6 inset-x-4 h-32 lg:left-1/4 lg:w-2/4
-      overflow-auto p-1
-      `}
+      className={`${
+        props.info_display
+          ? "fixed z-30 bg-white dark:bg-gray-900 rounded-lg shadow-lg bottom-6 inset-x-4 h-32 lg:left-1/4 lg:w-2/4 overflow-auto p-1"
+          : "hidden"
+      }`}
     >
       <div className="inline-flex">
         <div className="content-center">
@@ -63,7 +61,15 @@ const Info = (props) => {
         </div>
       </div>
       <div>
-        <small className={`${props.distance === undefined ? "hidden" : "inline-flex dark:text-white"}`}>{`${props.distance === undefined ? "" : props.distance+'km'}`}</small>
+        <small
+          className={`${
+            props.distance === undefined
+              ? "hidden"
+              : "inline-flex dark:text-white"
+          }`}
+        >{`${
+          props.distance === undefined ? "" : props.distance + "km"
+        }`}</small>
       </div>
       <div>
         <div className="inline-flex dark:text-white">
@@ -71,7 +77,11 @@ const Info = (props) => {
         </div>
       </div>
       <div>
-        <div className="dark:text-white" dangerouslySetInnerHTML={{__html: props.review_details}}></div> {/* allow html label working in review details */}
+        <div
+          className="dark:text-white"
+          dangerouslySetInnerHTML={{ __html: props.review_details }}
+        ></div>{" "}
+        {/* allow html label working in review details */}
         {/* <div className="dark:text-white">{props.review_details}</div> */}
       </div>
     </div>
