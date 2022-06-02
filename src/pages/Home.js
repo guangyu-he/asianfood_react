@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
+import { useAlert } from "react-alert";
 
 import Map from "../components/Home/Map_Home";
 import Info from "../components/Home/Info_Home";
@@ -49,7 +50,7 @@ function useWinSize() {
 function Home(props) {
   //console.log("Home: " + props);
   const size = useWinSize(); //获取屏幕大小
-  //console.log(size.height  or size.width);
+  console.log(size.height + "/" + size.width);
 
   //ANCHOR receive props using location
   const location = useLocation();
@@ -63,8 +64,12 @@ function Home(props) {
     review,
     review_details,
     info_display = true;
-  if (size.height <= 600) {
+
+  const alert = useAlert();
+  if (size.height <= 600 && size.width <= 600) {
     info_display = false;
+  } else if (size.width >= 600 && size.height <= 600) {
+    alert.show("For better viewing, please use vertically");
   }
 
   //SECTION initial variables if there is no props
